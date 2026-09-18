@@ -6,7 +6,7 @@
 // import { Product } from "@/data/products";
 // import { useCart } from "@/context/CartContext";
 
-// const PRIMARY   = "#071B52";
+// const PRIMARY   = "#111111";
 // const SECONDARY = "#C79524";
 // const fmt = (v: number) => v.toLocaleString("en-US");
 
@@ -304,7 +304,7 @@ import {
   type ProductReview,
 } from "@/services/productService";
 
-const PRIMARY = "#071B52";
+const PRIMARY = "#111111";
 const SECONDARY = "#C79524";
 const ACCENT = "#D7262E";
 

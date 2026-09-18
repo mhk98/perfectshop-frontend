@@ -518,7 +518,7 @@ function CheckoutContent() {
                   onClick={handleConfirm}
                   disabled={loading}
                   style={{
-                    background: loading ? "#aaa" : "#071B52", color: "#fff", border: "none", borderRadius: 8,
+                    background: loading ? "#aaa" : "#111111", color: "#fff", border: "none", borderRadius: 8,
                     padding: "16px 0", fontSize: 16, fontWeight: 700, cursor: loading ? "not-allowed" : "pointer",
                     display: "flex", alignItems: "center", justifyContent: "center", gap: 10, opacity: loading ? 0.8 : 1,
                   }}

@@ -357,9 +357,9 @@ body {
 }
 
 .track-order-input:focus {
-  border-color: #071B52;
+  border-color: #111111;
   background: #fff;
-  box-shadow: 0 0 0 4px rgba(7, 55, 99, 0.12);
+  box-shadow: 0 0 0 4px rgba(17, 17, 17, 0.12);
 }
 
 .track-order-button {
@@ -633,7 +633,7 @@ body {
   margin: 0 0 16px 22px;
 }
 .dynamic-page-content a {
-  color: #071B52;
+  color: #111111;
   text-decoration: underline;
 }
 .dynamic-page-content .policy-intro {

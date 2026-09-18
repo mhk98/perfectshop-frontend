@@ -11,7 +11,7 @@ import { apiFetch } from "@/lib/api";
 import { ApiResponse } from "@/types/api";
 import { useCustomer } from "@/context/CustomerContext";
 
-const PRIMARY = "#071B52";
+const PRIMARY = "#111111";
 const SECONDARY = "#C79524";
 
 interface OrderItem { name: string; image?: string; qty: number; price: number; size?: string; color?: string; }

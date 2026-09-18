@@ -22,7 +22,7 @@ const normalizePhoneNumber = (value: string) =>
     .replace(/[০-৯]/g, (digit) => String("০১২৩৪৫৬৭৮৯".indexOf(digit)))
     .replace(/\D/g, "");
 
-const PRIMARY = "#071B52";
+const PRIMARY = "#111111";
 const TEAL = "#C79524";
 const SOFT_TEAL = "#eefbfc";
 const TEXT = "#111827";

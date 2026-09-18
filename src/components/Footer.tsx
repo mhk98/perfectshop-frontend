@@ -378,7 +378,7 @@ export default function Footer({ settings }: Props) {
             <a
               href="#"
               className="hover:underline"
-              style={{ color: "#071B52" }}
+              style={{ color: "#111111" }}
             >
               {copyrightBrand}
             </a>
