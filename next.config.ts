@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.holydeen.com";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.perfectshop.world";
 
 const nextConfig: NextConfig = {
   turbopack: {
