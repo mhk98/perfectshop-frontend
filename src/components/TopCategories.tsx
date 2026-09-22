@@ -16,13 +16,12 @@ export default function TopCategories({ items }: Props) {
     <section className={styles.section} aria-labelledby="top-categories-title">
       <div className={styles.header}>
         <h2 id="top-categories-title" className={styles.heading}>TOP CATEGORIES</h2>
-        <span className={styles.rule} aria-hidden="true" />
       </div>
       <HorizontalCarousel itemWidthClass={styles.item} gap={16} autoplay interval={5000} showArrows>
         {categories.map((cat) => (
           <Link key={cat.Id} href={"/?menu=" + encodeURIComponent(cat.label)} className={styles.card}>
             <div className={styles.imageBox}>
-              <Image src={cat.imageUrl!} alt={cat.label} fill className={styles.image} draggable={false} unoptimized />
+              <Image src={cat.imageUrl!} alt={cat.label} fill className={styles.image} draggable={false} />
             </div>
             <span className={styles.label}>{cat.label}</span>
           </Link>

@@ -15,7 +15,7 @@ const lato = Lato({
 });
 
 const baseMetadata: Metadata = {
-  title: "Perfect Shop - Perfect Shop is the best level ecommerce in Bangladesh",
+  title: "Holy Deen - Holy Deen is the best level ecommerce in Bangladesh",
   description: "Best level ecommerce in Bangladesh",
   icons: {
     icon: [{ url: "/icon.png", type: "image/png" }],

@@ -38,7 +38,7 @@ export interface LandingPageData {
 export async function fetchLandingPage(id: string | number): Promise<LandingPageData | null> {
   try {
     const res = await fetch(`${BASE}/landing-pages/public/${encodeURIComponent(String(id))}`, {
-      cache: "no-store",
+      next: { revalidate: 60 },
       signal: AbortSignal.timeout(15_000),
     } as RequestInit);
     if (!res.ok) return null;

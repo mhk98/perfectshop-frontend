@@ -14,7 +14,7 @@ import {
   type OrderStatusOption,
 } from "@/services/orderStatusService";
 
-const PRIMARY = "#111111";
+const PRIMARY = "#1A1A1A";
 const SECONDARY = "#C79524";
 
 interface TrackedOrderItem {
@@ -214,7 +214,7 @@ export default function TrackOrderPage() {
     }
     const normalized = value.replace(/^#/, "").toUpperCase();
     const isPhone = /^01\d{9}$/.test(normalized);
-    const isInvoice = /^TJ-[A-Z0-9-]+$/.test(normalized);
+    const isInvoice = /^HD-[A-Z0-9-]+$/.test(normalized);
     if (!isPhone && !isInvoice) {
       setError("সঠিক ফোন নম্বর অথবা ইনভয়েস আইডি দিন");
       return;
@@ -376,7 +376,6 @@ export default function TrackOrderPage() {
                           alt={item.name}
                           fill
                           style={{ objectFit: "cover" }}
-                          unoptimized
                         />
                       ) : (
                         <div
