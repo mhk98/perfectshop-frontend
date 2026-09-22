@@ -122,8 +122,12 @@ export default function LandingOrderForm({
     };
   }, [options, selected, subtotal, title]);
 
-  const trackLandingEvent = (eventName: string, value = pixelData.value) => {
-    trackPixelEvent(eventName, { ...pixelData, value });
+  const trackLandingEvent = (
+    eventName: string,
+    value = pixelData.value,
+    orderId?: string | number,
+  ) => {
+    trackPixelEvent(eventName, { ...pixelData, value, order_id: orderId });
   };
 
   const trackAddToCartOnce = () => {
@@ -305,7 +309,7 @@ export default function LandingOrderForm({
     trackLandingEvent("AddPaymentInfo", total);
     try {
       const order = await createOrder(buildPayload("pending", normalizedPhone));
-      trackLandingEvent("Purchase", total);
+      trackLandingEvent("Purchase", total, order.Id);
       setSuccess(
         `${labels.successMessage} Order ID: ${order.orderId || order.Id}`,
       );

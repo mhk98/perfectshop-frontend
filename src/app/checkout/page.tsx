@@ -283,17 +283,23 @@ function CheckoutContent() {
         total: grandTotal,
         tracking: getPixelClickData(),
       });
+      const orderPixelData = {
+        content_ids: items.map((i) => i.id),
+        content_type: "product",
+        value: grandTotal,
+        currency: "BDT",
+        num_items: items.reduce((s, i) => s + i.qty, 0),
+      };
+      const orderPixelUser = { name, phone: normalizedPhone };
       trackPixelEvent(
         "AddPaymentInfo",
-        {
-          content_ids: items.map((i) => i.id),
-          content_name: "Order Pending Reconfirm",
-          content_type: "product",
-          value: grandTotal,
-          currency: "BDT",
-          num_items: items.reduce((s, i) => s + i.qty, 0),
-        },
-        { name, phone },
+        { ...orderPixelData, content_name: "Checkout Payment Info" },
+        orderPixelUser,
+      );
+      trackPixelEvent(
+        "Purchase",
+        { ...orderPixelData, content_name: "Order Confirmed", order_id: order.Id },
+        orderPixelUser,
       );
       window.localStorage.setItem(
         "kafela_pending_reconfirm_order",

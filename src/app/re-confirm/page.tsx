@@ -119,6 +119,7 @@ function ReConfirmContent() {
           currency: "BDT",
           num_items:
             confirmedOrder.items?.reduce((sum, item) => sum + item.qty, 0) || 0,
+          order_id: order.orderId,
         },
         { name: confirmedOrder.customerName || order.name, phone: order.phone },
       );
