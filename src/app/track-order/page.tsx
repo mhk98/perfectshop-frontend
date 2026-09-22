@@ -599,7 +599,7 @@ export default function TrackOrderPage() {
                     value={trackingValue}
                     onChange={(e) => setTrackingValue(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && track()}
-                    placeholder="01700000000 অথবা TJ-20260521-000001"
+                    placeholder="01700000000 অথবা PS-20260521-000001"
                     className="track-order-input"
                   />
                 </div>

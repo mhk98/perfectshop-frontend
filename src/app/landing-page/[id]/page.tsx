@@ -106,9 +106,9 @@ function buildProductOptions(
 export async function generateMetadata({ params }: PageProps) {
   const { id } = await params;
   const page = await fetchLandingPage(id);
-  if (!page) return { title: "Landing Page - Holy Deen" };
+  if (!page) return { title: "Landing Page - Perfect Shop" };
   return {
-    title: `${page.title} - Holy Deen`,
+    title: `${page.title} - Perfect Shop`,
     description: stripHtml(
       page.shortDescription || page.description || page.subTitle || "",
     ),
