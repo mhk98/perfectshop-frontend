@@ -89,6 +89,21 @@ export function getPixelClickData() {
   };
 }
 
+// Pixels are initialised only after /tracking/config loads (MetaPixel.tsx). Events fired
+// earlier — e.g. ViewContent on mount — are held here so the browser side isn't lost.
+let pixelsReady = false;
+const pendingBrowserEvents: (() => void)[] = [];
+
+function runWhenPixelsReady(send: () => void) {
+  if (pixelsReady) send();
+  else pendingBrowserEvents.push(send);
+}
+
+export function markPixelsReady() {
+  pixelsReady = true;
+  pendingBrowserEvents.splice(0).forEach((send) => send());
+}
+
 function currentUrl() {
   if (typeof window === "undefined") return "";
   return window.location.href;
@@ -126,14 +141,20 @@ export function trackPixelEvent(
   if (typeof window === "undefined") return;
 
   const id = eventId(eventName, eventName === "Purchase" ? data.order_id : undefined);
+  // Name/phone go only to the server (hashed there) — Meta flags raw PII in browser custom data.
   const payload: Record<string, unknown> = { ...data };
+  if (userData?.customerId) payload.customer_id = userData.customerId;
 
-  if (userData) {
-    if (userData.customerId) payload.customer_id = userData.customerId;
-    if (userData.name)       payload.customer_name = userData.name;
-    if (userData.phone)      payload.customer_phone = userData.phone;
-  }
+  runWhenPixelsReady(() => sendBrowserEvent(eventName, id, data, payload));
+  sendServerEvent(eventName, id, data, userData);
+}
 
+function sendBrowserEvent(
+  eventName: string,
+  id: string,
+  data: PixelProductData,
+  payload: Record<string, unknown>,
+) {
   if (typeof window.fbq === "function") {
     const method = STANDARD_EVENTS.has(eventName) ? "track" : "trackCustom";
     window.fbq(method, eventName, payload, { eventID: id });
@@ -167,27 +188,28 @@ export function trackPixelEvent(
       transaction_id: String(data.order_id ?? id),
       }));
   }
-
-  sendServerEvent(eventName, id, data, userData);
 }
 
 export function trackPageView() {
   if (typeof window === "undefined") return;
 
   const id = eventId("PageView");
+  const pageLocation = currentUrl();
 
-  if (typeof window.fbq === "function") {
-    window.fbq("track", "PageView", {}, { eventID: id });
-  }
+  runWhenPixelsReady(() => {
+    if (typeof window.fbq === "function") {
+      window.fbq("track", "PageView", {}, { eventID: id });
+    }
 
-  window.ttq?.page?.();
+    window.ttq?.page?.();
 
-  if (typeof window.gtag === "function") {
-    window.gtag("event", "page_view", {
-      page_location: currentUrl(),
-      page_referrer: document.referrer || undefined,
-    });
-  }
+    if (typeof window.gtag === "function") {
+      window.gtag("event", "page_view", {
+        page_location: pageLocation,
+        page_referrer: document.referrer || undefined,
+      });
+    }
+  });
 
   sendServerEvent("PageView", id, {});
 }

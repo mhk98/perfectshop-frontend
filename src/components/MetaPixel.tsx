@@ -1,8 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { BASE } from "@/lib/api";
-import { trackPageView } from "@/lib/pixel";
+import { markPixelsReady, trackPageView } from "@/lib/pixel";
 
 interface TrackingConfig {
   metaPixels?: { pixelsId: string }[];
@@ -95,7 +95,6 @@ function initGoogleAds(configs: NonNullable<TrackingConfig["googleAds"]>) {
 
 export default function MetaPixel() {
   const pathname = usePathname();
-  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     fetch(`${BASE}/tracking/config`, { cache: "no-store" })
@@ -107,13 +106,13 @@ export default function MetaPixel() {
         initGoogleAds(config.googleAds || []);
       })
       .catch(() => {})
-      .finally(() => setReady(true));
+      .finally(markPixelsReady);
   }, []);
 
-  // Fires on first load (after pixels init) and on every client-side route change
+  // Fires on first load and on every client-side route change; browser side waits for init
   useEffect(() => {
-    if (ready) trackPageView();
-  }, [ready, pathname]);
+    trackPageView();
+  }, [pathname]);
 
   return null;
 }
