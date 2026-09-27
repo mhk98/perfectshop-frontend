@@ -9,7 +9,8 @@ import { useCustomer } from "@/context/CustomerContext";
 import { trackPixelEvent } from "@/lib/pixel";
 
 const PRIMARY   = "#1A1A1A";
-const SECONDARY = "#C79524";
+const SECONDARY = "#FFC107";
+const SECONDARY_TEXT = "#B7791F";
 const ACCENT    = "#D7262E";
 const formatPrice = (value: number) => value.toLocaleString("en-US");
 
@@ -107,7 +108,7 @@ export default function ProductCard({ product }: { product: Product }) {
           <span className="text-gray-400 line-through" style={{ fontSize: 11 }}>
             ৳{formatPrice(product.originalPrice)}
           </span>
-          <span className="font-extrabold" style={{ color: SECONDARY, fontSize: 13 }}>
+          <span className="font-extrabold" style={{ color: SECONDARY_TEXT, fontSize: 13 }}>
             ৳{formatPrice(product.discountedPrice)}
           </span>
         </div>
@@ -125,7 +126,7 @@ export default function ProductCard({ product }: { product: Product }) {
             onClick={handleAddToCart}
             disabled={product.inStock === false}
             className="flex items-center justify-center text-white transition-colors disabled:cursor-not-allowed disabled:opacity-70"
-            style={{ width: 32, height: 28, borderRadius: 3, background: product.inStock === false ? "#b8bec8" : added ? "#16a34a" : SECONDARY }}
+            style={{ width: 32, height: 28, borderRadius: 3, background: product.inStock === false ? "#b8bec8" : added ? "#16a34a" : SECONDARY, color: product.inStock !== false && !added ? PRIMARY : "#fff" }}
             title="Add to Cart"
           >
             {added ? (

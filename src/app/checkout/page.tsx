@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState, Suspense } from "react";
+import { useCheckoutSession } from "@/lib/useCheckoutSession";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
@@ -51,6 +52,7 @@ function getCouponErrorMessage(error: unknown) {
 }
 
 function CheckoutContent() {
+  const checkout = useCheckoutSession();
   const router = useRouter();
   const { items, removeFromCart, updateQty, clearCart, totalPrice } = useCart();
 
@@ -92,7 +94,7 @@ function CheckoutContent() {
       id: "cod" as const,
       label: "Cash on Delivery",
       number: null,
-      bg: "#C79524",
+      bg: "#B7791F",
     },
     {
       id: "bkash" as const,
@@ -148,12 +150,14 @@ function CheckoutContent() {
 
   useEffect(() => {
     const normalizedPhone = normalizePhoneNumber(phone);
-    if (items.length === 0 || !/^01\d{9}$/.test(normalizedPhone)) return;
+    if (checkout.submitting.current || items.length === 0 || !/^01\d{9}$/.test(normalizedPhone)) return;
 
     const controller = new AbortController();
     const timer = window.setTimeout(() => {
+      if (checkout.submitting.current) return;
       saveIncompleteOrder(
         {
+          checkoutKey: checkout.getKey(normalizedPhone),
           incompleteOrderId: incompleteOrderId || undefined,
           deviceId,
           customerName: name.trim() || "Incomplete Customer",
@@ -243,6 +247,7 @@ function CheckoutContent() {
   };
 
   const handleConfirm = async () => {
+    if (checkout.submitting.current) return;
     const normalizedPhone = normalizePhoneNumber(phone);
     if (!name || !phone || !address || !district) {
       setErrorMsg("নাম, ফোন, ঠিকানা এবং জেলা পূরণ করুন।");
@@ -256,11 +261,13 @@ function CheckoutContent() {
       setErrorMsg("কোনো পণ্য নেই।");
       return;
     }
+    checkout.submitting.current = true;
     setLoading(true);
     setErrorMsg("");
     try {
       const order = await createOrder({
-        incompleteOrderId: incompleteOrderId || undefined,
+        checkoutKey: checkout.getKey(normalizedPhone),
+          incompleteOrderId: incompleteOrderId || undefined,
         deviceId,
         customerName: name,
         customerPhone: normalizedPhone,
@@ -311,11 +318,13 @@ function CheckoutContent() {
           total: grandTotal,
         }),
       );
+      checkout.complete();
       clearCart();
       router.push(
         `/order-success?invoiceId=${encodeURIComponent(order.invoiceId || order.orderId || "")}`,
       );
     } catch (error) {
+      checkout.submitting.current = false;
       const message = error instanceof Error ? error.message : "";
       const lowerMessage = message.toLowerCase();
       if (
@@ -366,7 +375,7 @@ function CheckoutContent() {
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        background: "#F8F6F0",
+        background: "#FAF8F2",
       }}
     >
       <Header />
@@ -384,10 +393,10 @@ function CheckoutContent() {
               }}
             >
               {/* Brand header */}
-              <div style={{ background: "#C79524", padding: "18px 28px" }}>
+              <div style={{ background: "#FFC107", padding: "18px 28px" }}>
                 <p
                   style={{
-                    color: "#fff",
+                    color: "#1A1A1A",
                     fontSize: 15,
                     fontWeight: 600,
                     margin: 0,
@@ -650,7 +659,7 @@ function CheckoutContent() {
                       style={{
                         margin: "6px 0 0",
                         fontSize: 13,
-                        color: "#C79524",
+                        color: "#B7791F",
                         fontWeight: 500,
                       }}
                     >
@@ -1116,8 +1125,8 @@ function CheckoutContent() {
                     onClick={handleApplyCoupon}
                     disabled={couponLoading}
                     style={{
-                      background: couponLoading ? "#9ca3af" : "#C79524",
-                      color: "#fff",
+                      background: couponLoading ? "#9ca3af" : "#FFC107",
+                      color: couponLoading ? "#fff" : "#1A1A1A",
                       border: "none",
                       borderRadius: 8,
                       padding: "0 22px",

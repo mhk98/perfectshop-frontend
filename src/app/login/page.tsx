@@ -10,7 +10,8 @@ import { ApiResponse } from "@/types/api";
 import { useCustomer } from "@/context/CustomerContext";
 
 const PRIMARY = "#1A1A1A";
-const SECONDARY = "#C79524";
+const SECONDARY = "#FFC107";
+const SECONDARY_TEXT = "#B7791F";
 
 type Mode = "login" | "register";
 
@@ -111,7 +112,7 @@ export default function CustomerLoginPage() {
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        background: "#F8F6F0",
+        background: "#FAF8F2",
       }}
     >
       <MarqueeBanner />
@@ -140,7 +141,7 @@ export default function CustomerLoginPage() {
           <div
             style={{
               background: SECONDARY,
-              color: "#fff",
+              color: "#1A1A1A",
               padding: "13px 16px",
               fontSize: 18,
               fontWeight: 900,
@@ -252,7 +253,7 @@ export default function CustomerLoginPage() {
                     style={{
                       border: 0,
                       background: "transparent",
-                      color: SECONDARY,
+                      color: SECONDARY_TEXT,
                       cursor: "pointer",
                       fontSize: 14,
                     }}
@@ -268,7 +269,7 @@ export default function CustomerLoginPage() {
                     style={{
                       border: 0,
                       background: "transparent",
-                      color: SECONDARY,
+                      color: SECONDARY_TEXT,
                       cursor: "pointer",
                       fontSize: 14,
                     }}

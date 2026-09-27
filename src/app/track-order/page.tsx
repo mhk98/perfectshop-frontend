@@ -15,7 +15,8 @@ import {
 } from "@/services/orderStatusService";
 
 const PRIMARY = "#1A1A1A";
-const SECONDARY = "#C79524";
+const SECONDARY = "#FFC107";
+const SECONDARY_TEXT = "#B7791F";
 
 interface TrackedOrderItem {
   name: string;
@@ -214,7 +215,7 @@ export default function TrackOrderPage() {
     }
     const normalized = value.replace(/^#/, "").toUpperCase();
     const isPhone = /^01\d{9}$/.test(normalized);
-    const isInvoice = /^HD-[A-Z0-9-]+$/.test(normalized);
+    const isInvoice = /^PS-[A-Z0-9-]+$/.test(normalized);
     if (!isPhone && !isInvoice) {
       setError("সঠিক ফোন নম্বর অথবা ইনভয়েস আইডি দিন");
       return;
@@ -536,7 +537,7 @@ export default function TrackOrderPage() {
                   মোট
                 </span>
                 <span
-                  style={{ fontSize: 15, fontWeight: 900, color: SECONDARY }}
+                  style={{ fontSize: 15, fontWeight: 900, color: SECONDARY_TEXT }}
                 >
                   ৳{fmt(order.total)}
                 </span>
@@ -648,7 +649,7 @@ export default function TrackOrderPage() {
                       height: 36,
                       borderRadius: 8,
                       background: SECONDARY,
-                      color: "#fff",
+                      color: "#1A1A1A",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",

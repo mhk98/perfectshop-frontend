@@ -12,7 +12,7 @@ import { useCustomer } from "@/context/CustomerContext";
 import { trackPixelEvent } from "@/lib/pixel";
 
 const PRIMARY   = "#1A1A1A";   // logo black
-const SECONDARY = "#C79524";   // logo gold
+const SECONDARY = "#FFC107";   // logo yellow
 
 interface HeaderProps {
   logoUrl?: string | null;
@@ -199,8 +199,8 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                     <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0" />
                   </svg>
                   <span
-                    className="absolute -top-2 -right-2 text-white flex items-center justify-center rounded-full font-bold"
-                    style={{ background: SECONDARY, width: 18, height: 18, fontSize: 11, lineHeight: "18px" }}
+                    className="absolute -top-2 -right-2 flex items-center justify-center rounded-full font-bold"
+                    style={{ background: SECONDARY, color: PRIMARY, width: 18, height: 18, fontSize: 11, lineHeight: "18px" }}
                   >{totalItems}</span>
                 </div>
               </button>
@@ -232,7 +232,7 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                           <div style={{ display: "flex", justifyContent: "center", marginBottom: 8 }}>
                             <span style={{ fontSize: 13, fontWeight: 700, color: "#333" }}>TOTAL : ৳{totalPrice.toLocaleString("en-US")}</span>
                           </div>
-                          <button onClick={handleCartCheckout} style={{ width: "100%", background: SECONDARY, color: "#fff", border: "none", borderRadius: 6, padding: "10px 0", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
+                          <button onClick={handleCartCheckout} style={{ width: "100%", background: SECONDARY, color: PRIMARY, border: "none", borderRadius: 6, padding: "10px 0", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
                             Order Now
                           </button>
                         </div>
@@ -391,7 +391,7 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                   <svg width={26} height={26} fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
                     <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0" />
                   </svg>
-                  <span className="absolute -top-2 -right-2 text-white flex items-center justify-center rounded-full font-bold" style={{ background: SECONDARY, width: 18, height: 18, fontSize: 11, lineHeight: "18px" }}>{totalItems}</span>
+                  <span className="absolute -top-2 -right-2 flex items-center justify-center rounded-full font-bold" style={{ background: SECONDARY, color: PRIMARY, width: 18, height: 18, fontSize: 11, lineHeight: "18px" }}>{totalItems}</span>
                 </div>
                 <span style={{ fontSize: 11 }}>৳{totalPrice.toLocaleString("en-US")}</span>
               </button>
@@ -422,7 +422,7 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                           <div style={{ display: "flex", justifyContent: "center", marginBottom: 10 }}>
                             <span style={{ fontSize: 14, fontWeight: 700, color: "#333" }}>TOTAL : ৳{totalPrice.toLocaleString("en-US")}</span>
                           </div>
-                          <button onClick={handleCartCheckout} style={{ width: "100%", background: SECONDARY, color: "#fff", border: "none", borderRadius: 6, padding: "12px 0", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
+                          <button onClick={handleCartCheckout} style={{ width: "100%", background: SECONDARY, color: PRIMARY, border: "none", borderRadius: 6, padding: "12px 0", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
                             Order Now
                           </button>
                         </div>
@@ -491,18 +491,18 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                                 fontSize: 14,
                                 padding: "10px 18px",
                                 backgroundColor: isSubActive && !activeChild ? SECONDARY : "",
-                                color: isSubActive && !activeChild ? "#fff" : "#374151",
+                                color: isSubActive && !activeChild ? PRIMARY : "#374151",
                               }}
                               onMouseEnter={(e) => {
                                 e.currentTarget.style.backgroundColor = SECONDARY;
-                                e.currentTarget.style.color = "#fff";
+                                e.currentTarget.style.color = PRIMARY;
                               }}
                               onMouseLeave={(e) => {
                                 e.currentTarget.style.backgroundColor = isSubActive && !activeChild ? SECONDARY : "";
-                                e.currentTarget.style.color = isSubActive && !activeChild ? "#fff" : "";
+                                e.currentTarget.style.color = isSubActive && !activeChild ? PRIMARY : "";
                               }}
                             >
-                              <span style={{ color: isSubActive && !activeChild ? "#fff" : PRIMARY, fontSize: 16, lineHeight: 1 }}>›</span>
+                              <span style={{ color: isSubActive && !activeChild ? PRIMARY : PRIMARY, fontSize: 16, lineHeight: 1 }}>›</span>
                               <span style={{ flex: 1 }}>{sub.label}</span>
                             </Link>
 
@@ -518,18 +518,18 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                                     fontSize: 13,
                                     padding: "8px 18px 8px 34px",
                                     backgroundColor: isChildActive ? SECONDARY : "#fafafa",
-                                    color: isChildActive ? "#fff" : "#4b5563",
+                                    color: isChildActive ? PRIMARY : "#4b5563",
                                   }}
                                   onMouseEnter={(e) => {
                                     e.currentTarget.style.backgroundColor = SECONDARY;
-                                    e.currentTarget.style.color = "#fff";
+                                    e.currentTarget.style.color = PRIMARY;
                                   }}
                                   onMouseLeave={(e) => {
                                     e.currentTarget.style.backgroundColor = isChildActive ? SECONDARY : "#fafafa";
-                                    e.currentTarget.style.color = isChildActive ? "#fff" : "#4b5563";
+                                    e.currentTarget.style.color = isChildActive ? PRIMARY : "#4b5563";
                                   }}
                                 >
-                                  <span style={{ color: isChildActive ? "#fff" : PRIMARY, fontSize: 14, lineHeight: 1 }}>›</span>
+                                  <span style={{ color: isChildActive ? PRIMARY : PRIMARY, fontSize: 14, lineHeight: 1 }}>›</span>
                                   {child.label}
                                 </Link>
                               );

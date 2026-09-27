@@ -155,7 +155,7 @@ function FooterLink({
           lineHeight: "24px",
           display: "block",
         }}
-        className="hover:text-[#C79524] transition-colors"
+        className="hover:text-[#B7791F] transition-colors"
       >
         {children}
       </Link>
@@ -369,14 +369,14 @@ export default function Footer({ settings }: Props) {
 
       {/* Copyright */}
       {copyright && (
-      <div className="bg-black py-3.5 text-center">
+      <div className="bg-[#111111] py-3.5 text-center">
         <p style={{ fontSize: 13, color: "#aaa" }}>
           {copyrightMain}{" "}
           {copyrightBrand && (
             <a
               href="#"
               className="hover:underline"
-              style={{ color: "#1A1A1A" }}
+              style={{ color: "#FFC107" }}
             >
               {copyrightBrand}
             </a>

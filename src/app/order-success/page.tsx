@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-const SECONDARY = "#C79524";
+const SECONDARY = "#FFC107";
 
 function getStoredInvoiceId(): string {
   if (typeof window === "undefined") return "";
@@ -34,7 +34,7 @@ function OrderSuccessContent() {
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        background: "#F8F6F0",
+        background: "#FAF8F2",
       }}
     >
       <Header />
@@ -128,7 +128,7 @@ function OrderSuccessContent() {
               style={{
                 display: "block",
                 background: SECONDARY,
-                color: "#fff",
+                color: "#1A1A1A",
                 padding: "13px 0",
                 borderRadius: 8,
                 fontWeight: 700,

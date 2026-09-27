@@ -7,7 +7,7 @@
 // import { useCart } from "@/context/CartContext";
 
 // const PRIMARY   = "#1A1A1A";
-// const SECONDARY = "#C79524";
+// const SECONDARY = "#FFC107";
 // const fmt = (v: number) => v.toLocaleString("en-US");
 
 // interface Props {
@@ -119,13 +119,13 @@
 //       <div className="product-info">
 
 //         <nav className="text-base text-gray-500 mb-5 flex items-center flex-wrap gap-1">
-//           <Link href="/" className="hover:text-[#C79524] transition">Home</Link>
+//           <Link href="/" className="hover:text-[#B7791F] transition">Home</Link>
 //           {product.category && (
 //             <>
 //               <span>/</span>
 //               <Link
 //                 href={`/?menu=${encodeURIComponent(product.category)}`}
-//                 className="hover:text-[#C79524] transition capitalize"
+//                 className="hover:text-[#B7791F] transition capitalize"
 //               >
 //                 {product.category}
 //               </Link>
@@ -136,7 +136,7 @@
 //               <span>/</span>
 //               <Link
 //                 href={`/?menu=${encodeURIComponent(product.category ?? "")}&sub=${encodeURIComponent(product.subCategory)}`}
-//                 className="hover:text-[#C79524] transition capitalize"
+//                 className="hover:text-[#B7791F] transition capitalize"
 //               >
 //                 {product.subCategory}
 //               </Link>
@@ -305,7 +305,8 @@ import {
 } from "@/services/productService";
 
 const PRIMARY = "#1A1A1A";
-const SECONDARY = "#C79524";
+const SECONDARY = "#FFC107";
+const SECONDARY_TEXT = "#B7791F";
 const ACCENT = "#D7262E";
 
 const fmt = (v: number) => v.toLocaleString("en-US");
@@ -485,7 +486,7 @@ export default function ProductDetailClient({
           style={{ marginBottom: "1rem" }}
           className="mb-4 flex flex-wrap items-center gap-1 text-base text-gray-500"
         >
-          <Link href="/" className="transition hover:text-[#C79524]">
+          <Link href="/" className="transition hover:text-[#B7791F]">
             Home
           </Link>
 
@@ -494,7 +495,7 @@ export default function ProductDetailClient({
               <span>/</span>
               <Link
                 href={`/?menu=${encodeURIComponent(product.category)}`}
-                className="capitalize transition hover:text-[#C79524]"
+                className="capitalize transition hover:text-[#B7791F]"
               >
                 {product.category}
               </Link>
@@ -508,7 +509,7 @@ export default function ProductDetailClient({
                 href={`/?menu=${encodeURIComponent(
                   product.category ?? "",
                 )}&sub=${encodeURIComponent(product.subCategory)}`}
-                className="capitalize transition hover:text-[#C79524]"
+                className="capitalize transition hover:text-[#B7791F]"
               >
                 {product.subCategory}
               </Link>
@@ -626,7 +627,7 @@ export default function ProductDetailClient({
           <button
             onClick={handleAddToCart}
             disabled={product.inStock === false}
-            className="h-[45px] flex-1 rounded-[5px] text-lg font-bold text-white transition disabled:opacity-50"
+            className="h-[45px] flex-1 rounded-[5px] text-lg font-bold text-[#1A1A1A] transition disabled:opacity-50"
             style={{
               cursor: "pointer",
               background: addedMsg ? "#16a34a" : PRIMARY,
@@ -638,7 +639,7 @@ export default function ProductDetailClient({
           <button
             onClick={handleOrderNow}
             disabled={product.inStock === false}
-            className="h-[45px] flex-1 rounded-[5px] text-lg font-bold text-white transition disabled:opacity-50"
+            className="h-[45px] flex-1 rounded-[5px] text-lg font-bold text-[#1A1A1A] transition disabled:opacity-50"
             style={{ cursor: "pointer", background: SECONDARY }}
           >
             Order Now
@@ -744,7 +745,7 @@ export default function ProductDetailClient({
               margin: 20px 0;
             }
             .product-description-content :global(a) {
-              color: ${SECONDARY};
+              color: ${SECONDARY_TEXT};
               text-decoration: underline;
             }
             .product-description-content :global(img) {
@@ -756,7 +757,7 @@ export default function ProductDetailClient({
               margin: 14px 0;
               padding: 10px 16px;
               border-left: 3px solid ${SECONDARY};
-              background: #faf7f0;
+              background: #FFF8E1;
               color: #4b5563;
             }
           `}</style>

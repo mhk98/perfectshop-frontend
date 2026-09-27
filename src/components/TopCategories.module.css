@@ -11,7 +11,7 @@
   margin-bottom: 16px;
 }
 .heading {
-  color: #1a1a1a;
+  color: #1A1A1A;
   font-size: 16px;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -56,13 +56,13 @@
   transition: color 200ms ease;
 }
 .card:hover {
-  border-color: #d8bd7d;
+  border-color: #FFD54F;
   box-shadow: 0 8px 18px rgb(15 23 42 / 16%);
 }
 .card:hover .image { transform: scale(1.035); }
-.card:hover .label { color: #96701a; }
+.card:hover .label { color: #B7791F; }
 .card:focus-visible {
-  outline: 2px solid #c79524;
+  outline: 2px solid #FFC107;
   outline-offset: -3px;
 }
 @media (max-width: 1023px) {

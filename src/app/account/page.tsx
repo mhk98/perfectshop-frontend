@@ -12,7 +12,8 @@ import { ApiResponse } from "@/types/api";
 import { useCustomer } from "@/context/CustomerContext";
 
 const PRIMARY = "#1A1A1A";
-const SECONDARY = "#C79524";
+const SECONDARY = "#FFC107";
+const SECONDARY_TEXT = "#B7791F";
 
 interface OrderItem { name: string; image?: string; qty: number; price: number; size?: string; color?: string; }
 interface Order {
@@ -95,7 +96,7 @@ export default function AccountPage() {
   const tabStyle = (active: boolean): React.CSSProperties => ({
     padding: "10px 24px", borderRadius: 8, border: "none", fontWeight: 700, fontSize: 14,
     cursor: "pointer", background: active ? SECONDARY : "#f3f4f6",
-    color: active ? "#fff" : "#555", transition: "all 0.15s",
+    color: active ? "#1A1A1A" : "#555", transition: "all 0.15s",
   });
 
   const inputStyle: React.CSSProperties = {
@@ -105,7 +106,7 @@ export default function AccountPage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "#F8F6F0" }}>
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "#FAF8F2" }}>
       <MarqueeBanner />
       <Header />
 
@@ -116,7 +117,7 @@ export default function AccountPage() {
           <div style={{ background: "#fff", borderRadius: 12, padding: "24px 28px", marginBottom: 20, boxShadow: "0 2px 8px rgba(0,0,0,0.07)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
               <div style={{ width: 52, height: 52, borderRadius: "50%", background: `${SECONDARY}20`, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <svg width="26" height="26" fill="none" stroke={SECONDARY} strokeWidth="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <svg width="26" height="26" fill="none" stroke={SECONDARY_TEXT} strokeWidth="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
               </div>
               <div>
                 <h1 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: "#111" }}>{customer?.name}</h1>
@@ -145,7 +146,7 @@ export default function AccountPage() {
               ) : orders.length === 0 ? (
                 <div style={{ background: "#fff", borderRadius: 12, padding: 40, textAlign: "center" }}>
                   <p style={{ fontSize: 16, fontWeight: 700, color: "#374151" }}>কোনো অর্ডার নেই</p>
-                  <Link href="/" style={{ color: SECONDARY, fontWeight: 700, fontSize: 14 }}>এখনই কিনুন →</Link>
+                  <Link href="/" style={{ color: SECONDARY_TEXT, fontWeight: 700, fontSize: 14 }}>এখনই কিনুন →</Link>
                 </div>
               ) : (
                 <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -189,7 +190,7 @@ export default function AccountPage() {
                         {/* Footer */}
                         <div style={{ padding: "12px 20px", background: "#f9fafb", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                           <span style={{ fontSize: 13, color: "#666" }}>Payment: {order.paymentMethod?.toUpperCase()}</span>
-                          <span style={{ fontSize: 15, fontWeight: 900, color: SECONDARY }}>মোট: ৳{fmt(order.total)}</span>
+                          <span style={{ fontSize: 15, fontWeight: 900, color: SECONDARY_TEXT }}>মোট: ৳{fmt(order.total)}</span>
                         </div>
                       </article>
                     );

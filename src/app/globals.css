@@ -2,12 +2,18 @@
 
 * {
   box-sizing: border-box;
+}
+
+/* Unlayered, so it beats Tailwind utilities. Landing pages opt out so their
+   utility-based layout (mx-auto, px-*, py-*) works; Tailwind preflight still
+   resets them. */
+:where(:not(.landing-root, .landing-root *)) {
   margin: 0;
   padding: 0;
 }
 
 body {
-  background-color: #F8F6F0;
+  background-color: #FAF8F2;
   font-family: "Lato", Arial, Helvetica, sans-serif;
   font-size: 15px;
   color: #333;
