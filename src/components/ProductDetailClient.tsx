@@ -627,7 +627,7 @@ export default function ProductDetailClient({
           <button
             onClick={handleAddToCart}
             disabled={product.inStock === false}
-            className="h-[45px] flex-1 rounded-[5px] text-lg font-bold text-[#1A1A1A] transition disabled:opacity-50"
+            className="h-[45px] flex-1 rounded-[5px] text-lg font-bold text-white transition disabled:opacity-50"
             style={{
               cursor: "pointer",
               background: addedMsg ? "#16a34a" : PRIMARY,
