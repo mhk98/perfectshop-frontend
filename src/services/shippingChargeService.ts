@@ -7,8 +7,9 @@ export interface ShippingCharge {
   date?: string | null;
 }
 
-const DEFAULT_DHAKA_CHARGE = 70;
-const DEFAULT_OUTSIDE_DHAKA_CHARGE = 130;
+// Minimum delivery charges; lower values coming from the backend are raised to these.
+export const MIN_DHAKA_CHARGE = 80;
+export const MIN_OUTSIDE_DHAKA_CHARGE = 130;
 
 const toAmount = (value: ShippingCharge["amount"]): number | null => {
   const amount = Number(value);
@@ -42,21 +43,30 @@ export function getDeliveryChargeForDistrict(
   if (!district) return 0;
 
   const isDhaka = district.toLowerCase() === "dhaka";
+  const minimum = isDhaka ? MIN_DHAKA_CHARGE : MIN_OUTSIDE_DHAKA_CHARGE;
   const matcher = isDhaka ? hasInsideDhakaText : hasOutsideDhakaText;
   const matched = charges.find((charge) => matcher(String(charge.note || "")));
   const matchedAmount = matched ? toAmount(matched.amount) : null;
-  if (matchedAmount !== null) return matchedAmount;
+  if (matchedAmount !== null) return Math.max(matchedAmount, minimum);
 
   const fallback = charges[isDhaka ? 0 : 1];
   const fallbackAmount = fallback ? toAmount(fallback.amount) : null;
-  if (fallbackAmount !== null) return fallbackAmount;
+  if (fallbackAmount !== null) return Math.max(fallbackAmount, minimum);
 
-  return isDhaka ? DEFAULT_DHAKA_CHARGE : DEFAULT_OUTSIDE_DHAKA_CHARGE;
+  return minimum;
 }
 
 export function getDeliveryChargeText(charge: ShippingCharge): string {
   const note = String(charge.note || "").trim();
   const amount = toAmount(charge.amount);
+  const area = hasInsideDhakaText(note)
+    ? { label: "ঢাকার ভিতরে", minimum: MIN_DHAKA_CHARGE }
+    : hasOutsideDhakaText(note)
+      ? { label: "ঢাকার বাইরে", minimum: MIN_OUTSIDE_DHAKA_CHARGE }
+      : null;
+  if (area && (amount === null || amount < area.minimum)) {
+    return `${area.label} ${area.minimum.toLocaleString("bn-BD")} টাকা`;
+  }
   const noteHasAmount = /[0-9০-৯]/.test(note);
   if (note && amount !== null && !noteHasAmount) {
     return `${note} - ৳${amount.toLocaleString("en-US")}`;

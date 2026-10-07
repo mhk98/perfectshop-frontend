@@ -7,6 +7,7 @@ export interface LandingProductOption {
   price?: string | number;
   originalPrice?: string | number;
   image?: string;
+  freeShipping?: boolean;
 }
 
 export interface LandingPageData {
@@ -32,6 +33,7 @@ export interface LandingPageData {
   template?: string | null;
   countdown?: string | null;
   regularData?: Record<string, unknown> | string | null;
+  freeShipping?: boolean;
   status?: boolean;
 }
 

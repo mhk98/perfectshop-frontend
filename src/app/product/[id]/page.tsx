@@ -127,7 +127,7 @@ export default async function ProductDetailPage({
                         })
                       ) : (
                         <p className="delivery-copy">
-                          • ঢাকার ভিতরে ৮০ টাকা • ঢাকার বাইরে ১২০ টাকা
+                          • ঢাকার ভিতরে ৮০ টাকা • ঢাকার বাইরে ১৩০ টাকা
                         </p>
                       )}
                     </div>

@@ -11,6 +11,10 @@ import {
 } from "@/services/landingPageService";
 import { fetchSiteSettings, type SiteSetting } from "@/services/settingService";
 import LandingOrderForm, { LandingOrderOption } from "./LandingOrderForm";
+import {
+  MIN_DHAKA_CHARGE,
+  MIN_OUTSIDE_DHAKA_CHARGE,
+} from "@/services/shippingChargeService";
 
 type PageProps = {
   params: Promise<{ id: string }>;
@@ -81,6 +85,7 @@ function buildProductOptions(
         toNumber(page.originalPrice, 2500),
       ),
       image: toImageUrl(String(item.image || page.bannerImageUrl || image)),
+      freeShipping: item.freeShipping === true,
     }))
     .filter((item) => item.name && item.price > 0);
 
@@ -94,6 +99,7 @@ function buildProductOptions(
       price: toNumber(page.price, 0),
       originalPrice: toNumber(page.originalPrice, 0),
       image: toImageUrl(image),
+      freeShipping: page.freeShipping === true,
     },
   ];
 }
@@ -139,8 +145,14 @@ export default async function LandingPage({ params }: PageProps) {
     regularData.orderTitle ||
       "অর্ডার করতে আপনার সঠিক তথ্য দিয়ে নিচের ফর্মটি সম্পূর্ণ পূরণ করুন।",
   );
-  const deliveryInside = toNumber(regularData.deliveryInside, 70);
-  const deliveryOutside = toNumber(regularData.deliveryOutside, 130);
+  const deliveryInside = Math.max(
+    toNumber(regularData.deliveryInside, MIN_DHAKA_CHARGE),
+    MIN_DHAKA_CHARGE,
+  );
+  const deliveryOutside = Math.max(
+    toNumber(regularData.deliveryOutside, MIN_OUTSIDE_DHAKA_CHARGE),
+    MIN_OUTSIDE_DHAKA_CHARGE,
+  );
   const headingItems = buildHeadingItems(regularData.headings);
   const featureSectionTitle = String(regularData.featureSectionTitle || "");
   const featureImages = buildFeatureImages(
