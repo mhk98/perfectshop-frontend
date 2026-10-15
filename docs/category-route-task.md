@@ -7,7 +7,7 @@
 
 ---
 
-Holy Deen storefront (holydeen-frontend, Next.js 16 App Router) এ category page এর জন্য আলাদা route বানাতে হবে, যাতে পুরো page cache (ISR) হয় আর SEO ভালো হয়।
+Perfect Shop storefront (holydeen-frontend, Next.js 16 App Router) এ category page এর জন্য আলাদা route বানাতে হবে, যাতে পুরো page cache (ISR) হয় আর SEO ভালো হয়।
 
 ## এখনকার অবস্থা
 

@@ -175,7 +175,7 @@ function ReConfirmContent({ header, footer }: SiteChromeSlots) {
                   fontWeight: 600,
                 }}
               >
-                Holy Deen এর সাথে থাকার জন্য জাযাকাল্লাহ খাইরান
+                Perfect Shop এর সাথে থাকার জন্য জাযাকাল্লাহ খাইরান
               </p>
               <div
                 style={{
@@ -270,7 +270,7 @@ function ReConfirmContent({ header, footer }: SiteChromeSlots) {
                   fontWeight: 600,
                 }}
               >
-                Holy Deen এর সাথে থাকার জন্য জাযাকাল্লাহ খাইরান
+                Perfect Shop এর সাথে থাকার জন্য জাযাকাল্লাহ খাইরান
               </p>
 
               <div
