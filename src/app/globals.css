@@ -1,14 +1,5 @@
 @import "tailwindcss";
 
-/* Brand palette, taken from the Perfect Shop logo (black + yellow). */
-@theme {
-  --color-brand-black: #111111;
-  --color-brand-yellow: #FFC400;
-  --color-brand-yellow-dark: #A87B00; /* yellow-family text on light backgrounds */
-  --color-brand-yellow-soft: #FFF8DB;
-  --color-brand-surface: #F6F6F4;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -22,7 +13,7 @@
 }
 
 body {
-  background-color: #F6F6F4;
+  background-color: #F8F6F0;
   font-family: "Lato", Arial, Helvetica, sans-serif;
   font-size: 15px;
   color: #333;
@@ -372,9 +363,9 @@ body {
 }
 
 .track-order-input:focus {
-  border-color: #111111;
+  border-color: #1A1A1A;
   background: #fff;
-  box-shadow: 0 0 0 4px rgba(17, 17, 17, 0.12);
+  box-shadow: 0 0 0 4px rgba(28, 43, 75, 0.12);
 }
 
 .track-order-button {
@@ -648,7 +639,7 @@ body {
   margin: 0 0 16px 22px;
 }
 .dynamic-page-content a {
-  color: #111111;
+  color: #1A1A1A;
   text-decoration: underline;
 }
 .dynamic-page-content .policy-intro {

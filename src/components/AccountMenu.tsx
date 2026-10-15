@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { useCustomer } from "@/context/CustomerContext";
 import CustomerAvatar from "@/components/CustomerAvatar";
 
-const SECONDARY = "#FFC400";
+const SECONDARY = "#FFC107";
+const GOLD_TEXT = "#A67C00";
 
 const MENU_LINKS = [
   {
@@ -55,7 +56,7 @@ export default function AccountMenu({ compact = false }: { compact?: boolean }) 
       <Link
         href="/login"
         aria-label="Login"
-        className="flex flex-col items-center gap-0.5 text-gray-600 hover:text-[#111111] transition-colors"
+        className="flex flex-col items-center gap-0.5 text-gray-600 hover:text-[#1A1A1A] transition-colors"
       >
         <svg width={compact ? 22 : 24} height={compact ? 22 : 24} fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
         <span style={{ fontSize: compact ? 10 : 11 }}>Login</span>
@@ -81,7 +82,7 @@ export default function AccountMenu({ compact = false }: { compact?: boolean }) 
         aria-haspopup="menu"
         aria-expanded={open}
         aria-label="Account menu"
-        className="flex flex-col items-center gap-0.5 text-gray-600 hover:text-[#111111] transition-colors"
+        className="flex flex-col items-center gap-0.5 text-gray-600 hover:text-[#1A1A1A] transition-colors"
         style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
       >
         <CustomerAvatar
@@ -106,7 +107,7 @@ export default function AccountMenu({ compact = false }: { compact?: boolean }) 
             style={{ width: 240, borderRadius: 10, border: "1px solid #e5e7eb", overflow: "hidden" }}
           >
             {/* Signed-in user */}
-            <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "14px 16px", background: "#F6F6F4", borderBottom: "1px solid #eee" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "14px 16px", background: "#F8F6F0", borderBottom: "1px solid #eee" }}>
               <CustomerAvatar customer={customer} size={40} />
               <div style={{ minWidth: 0 }}>
                 <p style={{ margin: 0, fontSize: 14, fontWeight: 700, color: "#111", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{customer?.name}</p>
@@ -124,7 +125,7 @@ export default function AccountMenu({ compact = false }: { compact?: boolean }) 
                   className="flex items-center hover:bg-gray-50 transition-colors"
                   style={{ gap: 12, padding: "10px 16px", fontSize: 14, color: "#374151", textDecoration: "none" }}
                 >
-                  <svg width={18} height={18} fill="none" stroke="#A87B00" strokeWidth={1.8} viewBox="0 0 24 24" style={{ flexShrink: 0 }}>{item.icon}</svg>
+                  <svg width={18} height={18} fill="none" stroke={GOLD_TEXT} strokeWidth={1.8} viewBox="0 0 24 24" style={{ flexShrink: 0 }}>{item.icon}</svg>
                   {item.label}
                 </Link>
               ))}

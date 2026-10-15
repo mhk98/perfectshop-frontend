@@ -93,7 +93,7 @@ function CheckoutContent({ header, footer }: SiteChromeSlots) {
       id: "cod" as const,
       label: "Cash on Delivery",
       number: null,
-      bg: "#111111",
+      bg: "#A67C00",
     },
     {
       id: "bkash" as const,
@@ -381,7 +381,7 @@ function CheckoutContent({ header, footer }: SiteChromeSlots) {
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        background: "#F6F6F4",
+        background: "#F8F6F0",
       }}
     >
       {header}
@@ -399,10 +399,10 @@ function CheckoutContent({ header, footer }: SiteChromeSlots) {
               }}
             >
               {/* Brand header */}
-              <div style={{ background: "#FFC400", padding: "18px 28px" }}>
+              <div style={{ background: "#FFC107", padding: "18px 28px" }}>
                 <p
                   style={{
-                    color: "#111111",
+                    color: "#1A1A1A",
                     fontSize: 15,
                     fontWeight: 600,
                     margin: 0,
@@ -665,7 +665,7 @@ function CheckoutContent({ header, footer }: SiteChromeSlots) {
                       style={{
                         margin: "6px 0 0",
                         fontSize: 13,
-                        color: "#A87B00",
+                        color: "#A67C00",
                         fontWeight: 500,
                       }}
                     >
@@ -784,7 +784,7 @@ function CheckoutContent({ header, footer }: SiteChromeSlots) {
                   onClick={handleConfirm}
                   disabled={loading}
                   style={{
-                    background: loading ? "#aaa" : "#111111",
+                    background: loading ? "#aaa" : "#1A1A1A",
                     color: "#fff",
                     border: "none",
                     borderRadius: 8,
@@ -1142,8 +1142,8 @@ function CheckoutContent({ header, footer }: SiteChromeSlots) {
                     onClick={handleApplyCoupon}
                     disabled={couponLoading}
                     style={{
-                      background: couponLoading ? "#9ca3af" : "#FFC400",
-                      color: "#111111",
+                      background: couponLoading ? "#9ca3af" : "#FFC107",
+                      color: couponLoading ? "#fff" : "#1A1A1A",
                       border: "none",
                       borderRadius: 8,
                       padding: "0 22px",

@@ -64,6 +64,7 @@ function toImageUrl(file?: string | null) {
   return `${IMAGES}/${value.replace(/^images\//, "")}`;
 }
 
+
 function buildProductOptions(
   page: LandingPageData,
   image: string,
@@ -111,9 +112,9 @@ function buildProductOptions(
 export async function generateMetadata({ params }: PageProps) {
   const { id } = await params;
   const page = await fetchLandingPage(id);
-  if (!page) return { title: "Landing Page - Perfect Shop" };
+  if (!page) return { title: "Landing Page - Holy Deen" };
   return {
-    title: `${page.title} - Perfect Shop`,
+    title: `${page.title} - Holy Deen`,
     description: stripHtml(
       page.shortDescription || page.description || page.subTitle || "",
     ),
@@ -181,10 +182,10 @@ export default async function LandingPage({ params }: PageProps) {
     toNumber(productOptions[0]?.originalPrice, 0);
   const hasReviewSection = Boolean(
     reviewHeading ||
-    reviewSubHeading ||
-    reviewRegularPriceLabel ||
-    reviewOfferPriceLabel ||
-    reviewButtonText,
+      reviewSubHeading ||
+      reviewRegularPriceLabel ||
+      reviewOfferPriceLabel ||
+      reviewButtonText,
   );
   const buttonStyle = {
     backgroundColor: colors.buttonColor,

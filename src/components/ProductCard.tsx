@@ -8,8 +8,9 @@ import { useCart } from "@/context/CartContext";
 import { useCustomer } from "@/context/CustomerContext";
 import { trackPixelEvent } from "@/lib/pixel";
 
-const PRIMARY   = "#111111";
-const SECONDARY = "#FFC400";
+const PRIMARY   = "#1A1A1A";
+const SECONDARY = "#FFC107";
+const GOLD_TEXT = "#A67C00";
 const ACCENT    = "#D7262E";
 const formatPrice = (value: number) => value.toLocaleString("en-US");
 
@@ -94,7 +95,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
         <Link
           href={`/product/${product.id}`}
-          className="block overflow-hidden px-2 text-center font-medium text-[#222] transition-colors hover:text-[#111111]"
+          className="block overflow-hidden px-2 text-center font-medium text-[#222] transition-colors hover:text-[#1A1A1A]"
           style={{
             display: "-webkit-box",
             WebkitLineClamp: 2,
@@ -112,7 +113,7 @@ export default function ProductCard({ product }: { product: Product }) {
           <span className="text-gray-400 line-through" style={{ fontSize: 11 }}>
             ৳{formatPrice(product.originalPrice)}
           </span>
-          <span className="font-extrabold" style={{ color: PRIMARY, fontSize: 13 }}>
+          <span className="font-extrabold" style={{ color: GOLD_TEXT, fontSize: 13 }}>
             {product.hasVariants && (product.priceMax ?? 0) > product.discountedPrice ? "From " : ""}
             ৳{formatPrice(product.discountedPrice)}
           </span>
@@ -130,8 +131,8 @@ export default function ProductCard({ product }: { product: Product }) {
           <button
             onClick={handleAddToCart}
             disabled={product.inStock === false}
-            className="flex items-center justify-center text-[#111111] transition-colors disabled:cursor-not-allowed disabled:opacity-70"
-            style={{ width: 32, height: 28, borderRadius: 3, background: product.inStock === false ? "#b8bec8" : added ? "#16a34a" : SECONDARY }}
+            className="flex items-center justify-center transition-colors disabled:cursor-not-allowed disabled:opacity-70"
+            style={{ width: 32, height: 28, borderRadius: 3, background: product.inStock === false ? "#b8bec8" : added ? "#16a34a" : SECONDARY, color: product.inStock === false || added ? "#fff" : PRIMARY }}
             title="Add to Cart"
           >
             {added ? (

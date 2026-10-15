@@ -11,8 +11,9 @@ import { ApiResponse } from "@/types/api";
 import { useCustomer } from "@/context/CustomerContext";
 import CustomerAvatar from "@/components/CustomerAvatar";
 
-const PRIMARY = "#111111";
-const SECONDARY = "#FFC400";
+const PRIMARY = "#1A1A1A";
+const SECONDARY = "#FFC107";
+const GOLD_TEXT = "#A67C00";
 
 interface OrderItem { name: string; image?: string; qty: number; price: number; variant?: string; size?: string; color?: string; }
 interface Order {
@@ -260,7 +261,7 @@ export default function AccountPage({ header, footer }: SiteChromeSlots) {
   const tabStyle = (active: boolean): React.CSSProperties => ({
     padding: "10px 24px", borderRadius: 8, border: "none", fontWeight: 700, fontSize: 14,
     cursor: "pointer", background: active ? SECONDARY : "#f3f4f6",
-    color: active ? "#111111" : "#555", transition: "all 0.15s",
+    color: active ? "#1A1A1A" : "#555", transition: "all 0.15s",
   });
 
   const inputStyle: React.CSSProperties = {
@@ -274,7 +275,7 @@ export default function AccountPage({ header, footer }: SiteChromeSlots) {
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "#F6F6F4" }}>
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "#F8F6F0" }}>
       <MarqueeBanner />
       {header}
 
@@ -317,7 +318,7 @@ export default function AccountPage({ header, footer }: SiteChromeSlots) {
               ) : orders.length === 0 ? (
                 <div style={{ background: "#fff", borderRadius: 12, padding: 40, textAlign: "center" }}>
                   <p style={{ fontSize: 16, fontWeight: 700, color: "#374151" }}>কোনো অর্ডার নেই</p>
-                  <Link href="/" style={{ color: "#A87B00", fontWeight: 700, fontSize: 14 }}>এখনই কিনুন →</Link>
+                  <Link href="/" style={{ color: GOLD_TEXT, fontWeight: 700, fontSize: 14 }}>এখনই কিনুন →</Link>
                 </div>
               ) : (
                 <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -361,7 +362,7 @@ export default function AccountPage({ header, footer }: SiteChromeSlots) {
                         {/* Footer */}
                         <div style={{ padding: "12px 20px", background: "#f9fafb", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                           <span style={{ fontSize: 13, color: "#666" }}>Payment: {order.paymentMethod?.toUpperCase()}</span>
-                          <span style={{ fontSize: 15, fontWeight: 900, color: PRIMARY }}>মোট: ৳{fmt(order.total)}</span>
+                          <span style={{ fontSize: 15, fontWeight: 900, color: GOLD_TEXT }}>মোট: ৳{fmt(order.total)}</span>
                         </div>
                       </article>
                     );
@@ -393,7 +394,7 @@ export default function AccountPage({ header, footer }: SiteChromeSlots) {
                 <div>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                     <label
-                      style={{ background: SECONDARY, color: "#111111", borderRadius: 8, padding: "9px 16px", fontSize: 13, fontWeight: 700, cursor: photoLoading || !profile ? "not-allowed" : "pointer", opacity: photoLoading || !profile ? 0.7 : 1 }}
+                      style={{ background: SECONDARY, color: "#1A1A1A", borderRadius: 8, padding: "9px 16px", fontSize: 13, fontWeight: 700, cursor: photoLoading || !profile ? "not-allowed" : "pointer", opacity: photoLoading || !profile ? 0.7 : 1 }}
                     >
                       {profile?.image ? "ছবি পরিবর্তন" : "ছবি আপলোড"}
                       <input
@@ -518,7 +519,7 @@ function Pagination({ page, totalPages, disabled, onChange }: {
   const btn = (active: boolean, off: boolean): React.CSSProperties => ({
     minWidth: 38, height: 38, padding: "0 12px", borderRadius: 8, fontSize: 14, fontWeight: 700,
     border: active ? "none" : "1px solid #e5e7eb",
-    background: active ? SECONDARY : "#fff", color: active ? "#111111" : "#374151",
+    background: active ? SECONDARY : "#fff", color: active ? "#1A1A1A" : "#374151",
     cursor: off ? "not-allowed" : "pointer", opacity: off && !active ? 0.5 : 1,
   });
 

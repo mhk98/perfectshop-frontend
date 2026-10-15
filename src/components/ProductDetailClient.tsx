@@ -6,8 +6,8 @@
 // import { Product } from "@/data/products";
 // import { useCart } from "@/context/CartContext";
 
-// const PRIMARY   = "#111111";
-// const SECONDARY = "#FFC400";
+// const PRIMARY   = "#1A1A1A";
+// const SECONDARY = "#FFC107";
 // const fmt = (v: number) => v.toLocaleString("en-US");
 
 // interface Props {
@@ -119,13 +119,13 @@
 //       <div className="product-info">
 
 //         <nav className="text-base text-gray-500 mb-5 flex items-center flex-wrap gap-1">
-//           <Link href="/" className="hover:text-[#A87B00] transition">Home</Link>
+//           <Link href="/" className="hover:text-[#FFC107] transition">Home</Link>
 //           {product.category && (
 //             <>
 //               <span>/</span>
 //               <Link
 //                 href={`/?menu=${encodeURIComponent(product.category)}`}
-//                 className="hover:text-[#A87B00] transition capitalize"
+//                 className="hover:text-[#FFC107] transition capitalize"
 //               >
 //                 {product.category}
 //               </Link>
@@ -136,7 +136,7 @@
 //               <span>/</span>
 //               <Link
 //                 href={`/?menu=${encodeURIComponent(product.category ?? "")}&sub=${encodeURIComponent(product.subCategory)}`}
-//                 className="hover:text-[#A87B00] transition capitalize"
+//                 className="hover:text-[#FFC107] transition capitalize"
 //               >
 //                 {product.subCategory}
 //               </Link>
@@ -306,8 +306,9 @@ import {
   type ProductReview,
 } from "@/services/productService";
 
-const PRIMARY = "#111111";
-const SECONDARY = "#FFC400";
+const PRIMARY = "#1A1A1A";
+const SECONDARY = "#FFC107";
+const GOLD_TEXT = "#A67C00";
 const ACCENT = "#D7262E";
 
 const fmt = (v: number) => v.toLocaleString("en-US");
@@ -470,7 +471,7 @@ export default function ProductDetailClient({
           style={{ marginBottom: "1rem" }}
           className="mb-4 flex flex-wrap items-center gap-1 text-base text-gray-500"
         >
-          <Link href="/" className="transition hover:text-[#A87B00]">
+          <Link href="/" className="transition hover:text-[#A67C00]">
             Home
           </Link>
 
@@ -479,7 +480,7 @@ export default function ProductDetailClient({
               <span>/</span>
               <Link
                 href={`/?menu=${encodeURIComponent(product.category)}`}
-                className="capitalize transition hover:text-[#A87B00]"
+                className="capitalize transition hover:text-[#A67C00]"
               >
                 {product.category}
               </Link>
@@ -493,7 +494,7 @@ export default function ProductDetailClient({
                 href={`/?menu=${encodeURIComponent(
                   product.category ?? "",
                 )}&sub=${encodeURIComponent(product.subCategory)}`}
-                className="capitalize transition hover:text-[#A87B00]"
+                className="capitalize transition hover:text-[#A67C00]"
               >
                 {product.subCategory}
               </Link>
@@ -589,7 +590,7 @@ export default function ProductDetailClient({
           <button
             onClick={handleOrderNow}
             disabled={!canBuy}
-            className="h-[45px] flex-1 rounded-[5px] text-lg font-bold text-[#111111] transition disabled:opacity-50"
+            className="h-[45px] flex-1 rounded-[5px] text-lg font-bold text-[#1A1A1A] transition disabled:opacity-50"
             style={{ cursor: "pointer", background: SECONDARY }}
           >
             Order Now
@@ -695,7 +696,7 @@ export default function ProductDetailClient({
               margin: 20px 0;
             }
             .product-description-content :global(a) {
-              color: #a87b00;
+              color: ${GOLD_TEXT};
               text-decoration: underline;
             }
             .product-description-content :global(img) {
@@ -707,7 +708,7 @@ export default function ProductDetailClient({
               margin: 14px 0;
               padding: 10px 16px;
               border-left: 3px solid ${SECONDARY};
-              background: #fffbea;
+              background: #faf7f0;
               color: #4b5563;
             }
           `}</style>

@@ -21,9 +21,10 @@ const normalizePhoneNumber = (value: string) =>
     .replace(/[০-৯]/g, (digit) => String("০১২৩৪৫৬৭৮৯".indexOf(digit)))
     .replace(/\D/g, "");
 
-const PRIMARY = "#111111";
-const GOLD = "#FFC400";
-const SOFT_GOLD = "#FFF8DB";
+const PRIMARY = "#1A1A1A";
+const GOLD = "#FFC107";
+const GOLD_TEXT = "#A67C00";
+const SOFT_GOLD = "#FFF8E1";
 const TEXT = "#111827";
 const MUTED = "#4b5563";
 
@@ -174,7 +175,7 @@ function ReConfirmContent({ header, footer }: SiteChromeSlots) {
                   fontWeight: 600,
                 }}
               >
-                Perfect Shop এর সাথে থাকার জন্য জাযাকাল্লাহ খাইরান
+                Holy Deen এর সাথে থাকার জন্য জাযাকাল্লাহ খাইরান
               </p>
               <div
                 style={{
@@ -184,7 +185,7 @@ function ReConfirmContent({ header, footer }: SiteChromeSlots) {
                   border: `1px solid ${GOLD}33`,
                   borderRadius: 10,
                   padding: "42px 34px",
-                  boxShadow: "0 18px 42px rgba(17, 17, 17, 0.10)",
+                  boxShadow: "0 18px 42px rgba(28, 43, 75, 0.10)",
                 }}
               >
                 <div
@@ -238,7 +239,7 @@ function ReConfirmContent({ header, footer }: SiteChromeSlots) {
                     fontSize: 18,
                     fontWeight: 800,
                     textDecoration: "none",
-                    boxShadow: "0 10px 22px rgba(17, 17, 17, 0.20)",
+                    boxShadow: "0 10px 22px rgba(28, 43, 75, 0.20)",
                   }}
                 >
                   অর্ডার ট্র্যাক করুন
@@ -269,7 +270,7 @@ function ReConfirmContent({ header, footer }: SiteChromeSlots) {
                   fontWeight: 600,
                 }}
               >
-                Perfect Shop এর সাথে থাকার জন্য জাযাকাল্লাহ খাইরান
+                Holy Deen এর সাথে থাকার জন্য জাযাকাল্লাহ খাইরান
               </p>
 
               <div
@@ -280,7 +281,7 @@ function ReConfirmContent({ header, footer }: SiteChromeSlots) {
                   border: `1px solid ${GOLD}33`,
                   borderRadius: 10,
                   padding: "34px 34px 36px",
-                  boxShadow: "0 18px 42px rgba(17, 17, 17, 0.10)",
+                  boxShadow: "0 18px 42px rgba(28, 43, 75, 0.10)",
                   textAlign: "center",
                 }}
               >
@@ -341,7 +342,7 @@ function ReConfirmContent({ header, footer }: SiteChromeSlots) {
                       fontSize: "clamp(18px, 2.6vw, 24px)",
                       fontWeight: 900,
                       cursor: loading ? "not-allowed" : "pointer",
-                      boxShadow: "0 10px 22px rgba(17, 17, 17, 0.20)",
+                      boxShadow: "0 10px 22px rgba(28, 43, 75, 0.20)",
                     }}
                   >
                     {loading ? "OTP পাঠানো হচ্ছে..." : "Re-Confirm Order"}
@@ -394,7 +395,7 @@ function ReConfirmContent({ header, footer }: SiteChromeSlots) {
                         border: 0,
                         borderRadius: 8,
                         background: verifying ? "#9ca3af" : GOLD,
-                        color: "#111111",
+                        color: verifying ? "#fff" : "#1A1A1A",
                         fontSize: 18,
                         fontWeight: 900,
                         cursor: verifying ? "not-allowed" : "pointer",
@@ -468,11 +469,11 @@ function ReConfirmContent({ header, footer }: SiteChromeSlots) {
                   }}
                 >
                   <p style={{ margin: "0 0 10px", display: "flex", gap: 10 }}>
-                    <span style={{ color: "#A87B00", fontWeight: 900 }}>✓</span>
+                    <span style={{ color: GOLD_TEXT, fontWeight: 900 }}>✓</span>
                     <span>কনফার্ম করলেই অর্ডার দ্রুত কুরিয়ারে যাবে।</span>
                   </p>
                   <p style={{ margin: 0, display: "flex", gap: 10 }}>
-                    <span style={{ color: "#A87B00", fontWeight: 900 }}>✓</span>
+                    <span style={{ color: GOLD_TEXT, fontWeight: 900 }}>✓</span>
                     <span>
                       অথবা রিকনফার্ম করতে আমাদের কাস্টমার সার্ভিস সেন্টার থেকে
                       কলের অপেক্ষা করতে হবে।

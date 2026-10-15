@@ -13,8 +13,9 @@ import {
   type OrderStatusOption,
 } from "@/services/orderStatusService";
 
-const PRIMARY = "#111111";
-const SECONDARY = "#FFC400";
+const PRIMARY = "#1A1A1A";
+const SECONDARY = "#FFC107";
+const GOLD_TEXT = "#A67C00";
 
 interface TrackedOrderItem {
   name: string;
@@ -214,7 +215,7 @@ export default function TrackOrderPage({ header, footer }: SiteChromeSlots) {
     }
     const normalized = value.replace(/^#/, "").toUpperCase();
     const isPhone = /^01\d{9}$/.test(normalized);
-    // PS- is current; TJ-/WZ- are older invoice prefixes the backend still resolves.
+    // HD- is current; TJ-/WZ- are older invoice prefixes the backend still resolves.
     const isInvoice = /^(HD|TJ|WZ)-[A-Z0-9-]+$/.test(normalized);
     if (!isPhone && !isInvoice) {
       setError("সঠিক ফোন নম্বর অথবা ইনভয়েস আইডি দিন");
@@ -538,7 +539,7 @@ export default function TrackOrderPage({ header, footer }: SiteChromeSlots) {
                   মোট
                 </span>
                 <span
-                  style={{ fontSize: 15, fontWeight: 900, color: PRIMARY }}
+                  style={{ fontSize: 15, fontWeight: 900, color: GOLD_TEXT }}
                 >
                   ৳{fmt(order.total)}
                 </span>
@@ -601,7 +602,7 @@ export default function TrackOrderPage({ header, footer }: SiteChromeSlots) {
                     value={trackingValue}
                     onChange={(e) => setTrackingValue(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && track()}
-                    placeholder="01700000000 অথবা PS-0001"
+                    placeholder="01700000000 অথবা HD-0001"
                     className="track-order-input"
                   />
                 </div>
@@ -650,7 +651,7 @@ export default function TrackOrderPage({ header, footer }: SiteChromeSlots) {
                       height: 36,
                       borderRadius: 8,
                       background: SECONDARY,
-                      color: "#111111",
+                      color: "#1A1A1A",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",

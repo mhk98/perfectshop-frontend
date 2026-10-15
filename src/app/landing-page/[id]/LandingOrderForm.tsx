@@ -4,11 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCheckoutSession } from "@/lib/useCheckoutSession";
 import { createOrder, saveIncompleteOrder } from "@/services/orderService";
-import {
-  getPixelClickData,
-  trackPixelEvent,
-  type PixelUserData,
-} from "@/lib/pixel";
+import { getPixelClickData, trackPixelEvent, type PixelUserData } from "@/lib/pixel";
 import type { CreateOrderPayload } from "@/types/api";
 
 export interface LandingOrderOption {
@@ -143,11 +139,7 @@ export default function LandingOrderForm({
     orderId?: string | number,
     userData?: PixelUserData,
   ) => {
-    trackPixelEvent(
-      eventName,
-      { ...pixelData, value, order_id: orderId },
-      userData,
-    );
+    trackPixelEvent(eventName, { ...pixelData, value, order_id: orderId }, userData);
   };
 
   const trackAddToCartOnce = () => {
@@ -337,7 +329,7 @@ export default function LandingOrderForm({
     try {
       const order = await createOrder(buildPayload("pending", normalizedPhone));
       trackLandingEvent("Purchase", total, order.Id, pixelUser);
-      // invoiceId is the display number (PS-xxxx); orderId is the raw stored value.
+      // invoiceId is the display number (HD-xxxx); orderId is the raw stored value.
       const invoiceId = order.invoiceId || order.orderId || String(order.Id);
       // Same hand-off as the cart checkout, so /order-success and re-confirm work alike.
       window.localStorage.setItem(

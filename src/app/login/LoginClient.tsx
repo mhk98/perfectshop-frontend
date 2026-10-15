@@ -8,8 +8,9 @@ import { apiFetch } from "@/lib/api";
 import { ApiResponse } from "@/types/api";
 import { useCustomer, type CustomerInfo } from "@/context/CustomerContext";
 
-const PRIMARY = "#111111";
-const SECONDARY = "#FFC400";
+const PRIMARY = "#1A1A1A";
+const SECONDARY = "#FFC107";
+const GOLD_TEXT = "#A67C00";
 
 type Mode = "login" | "register";
 
@@ -110,7 +111,7 @@ export default function CustomerLoginPage({ header, footer }: SiteChromeSlots) {
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        background: "#F6F6F4",
+        background: "#F8F6F0",
       }}
     >
       <MarqueeBanner />
@@ -139,7 +140,7 @@ export default function CustomerLoginPage({ header, footer }: SiteChromeSlots) {
           <div
             style={{
               background: SECONDARY,
-              color: "#111111",
+              color: "#1A1A1A",
               padding: "13px 16px",
               fontSize: 18,
               fontWeight: 900,
@@ -251,7 +252,7 @@ export default function CustomerLoginPage({ header, footer }: SiteChromeSlots) {
                     style={{
                       border: 0,
                       background: "transparent",
-                      color: "#A87B00",
+                      color: GOLD_TEXT,
                       cursor: "pointer",
                       fontSize: 14,
                     }}
@@ -267,7 +268,7 @@ export default function CustomerLoginPage({ header, footer }: SiteChromeSlots) {
                     style={{
                       border: 0,
                       background: "transparent",
-                      color: "#A87B00",
+                      color: GOLD_TEXT,
                       cursor: "pointer",
                       fontSize: 14,
                     }}

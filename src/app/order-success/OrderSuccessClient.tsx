@@ -5,7 +5,7 @@ import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-const SECONDARY = "#FFC400";
+const SECONDARY = "#FFC107";
 
 function getStoredInvoiceId(): string {
   if (typeof window === "undefined") return "";
@@ -33,7 +33,7 @@ function OrderSuccessContent({ header, footer }: SiteChromeSlots) {
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        background: "#F6F6F4",
+        background: "#F8F6F0",
       }}
     >
       {header}
@@ -127,7 +127,7 @@ function OrderSuccessContent({ header, footer }: SiteChromeSlots) {
               style={{
                 display: "block",
                 background: SECONDARY,
-                color: "#111111",
+                color: "#1A1A1A",
                 padding: "13px 0",
                 borderRadius: 8,
                 fontWeight: 700,

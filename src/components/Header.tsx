@@ -12,8 +12,8 @@ import { useCustomer } from "@/context/CustomerContext";
 import AccountMenu from "@/components/AccountMenu";
 import { trackPixelEvent } from "@/lib/pixel";
 
-const PRIMARY   = "#111111";   // logo black
-const SECONDARY = "#FFC400";   // logo yellow
+const PRIMARY   = "#1A1A1A";   // logo black
+const SECONDARY = "#FFC107";   // logo yellow
 
 interface HeaderProps {
   logoUrl?: string | null;
@@ -190,7 +190,7 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
 
             {/* Right icons: same three as desktop, with labels */}
             <div style={{ display: "flex", alignItems: "center", gap: 14, flexShrink: 0 }}>
-            <Link href="/track-order" className="flex flex-col items-center gap-0.5 text-gray-600 hover:text-[#111111] transition-colors">
+            <Link href="/track-order" className="flex flex-col items-center gap-0.5 text-gray-600 hover:text-[#1A1A1A] transition-colors">
               <svg width={22} height={22} fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
                 <rect x="1" y="3" width="15" height="13" rx="1" /><path d="M16 8h4l3 3v5h-7V8z" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" />
               </svg>
@@ -203,7 +203,7 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
             <div ref={cartRef} className="relative" style={{ flexShrink: 0 }}>
               <button
                 onClick={() => setCartOpen((o) => !o)}
-                className="flex flex-col items-center gap-0.5 text-gray-600 hover:text-[#111111] transition-colors"
+                className="flex flex-col items-center gap-0.5 text-gray-600 hover:text-[#1A1A1A] transition-colors"
                 style={{ background: "none", border: "none", cursor: "pointer", padding: 0, position: "relative" }}
               >
                 <div className="relative">
@@ -211,7 +211,7 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                     <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0" />
                   </svg>
                   <span
-                    className="absolute -top-2 -right-2 text-[#111111] flex items-center justify-center rounded-full font-bold"
+                    className="absolute -top-2 -right-2 text-[#1A1A1A] flex items-center justify-center rounded-full font-bold"
                     style={{ background: SECONDARY, width: 16, height: 16, fontSize: 10, lineHeight: "16px" }}
                   >{totalItems}</span>
                 </div>
@@ -245,7 +245,7 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                           <div style={{ display: "flex", justifyContent: "center", marginBottom: 8 }}>
                             <span style={{ fontSize: 13, fontWeight: 700, color: "#333" }}>TOTAL : ৳{totalPrice.toLocaleString("en-US")}</span>
                           </div>
-                          <button onClick={handleCartCheckout} style={{ width: "100%", background: SECONDARY, color: "#111111", border: "none", borderRadius: 6, padding: "10px 0", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
+                          <button onClick={handleCartCheckout} style={{ width: "100%", background: SECONDARY, color: "#1A1A1A", border: "none", borderRadius: 6, padding: "10px 0", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
                             Order Now
                           </button>
                         </div>
@@ -379,7 +379,7 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
 
           {/* Right icons */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 20 }}>
-            <Link href="/track-order" className="hidden md:flex flex-col items-center gap-0.5 text-gray-600 hover:text-[#111111] transition-colors">
+            <Link href="/track-order" className="hidden md:flex flex-col items-center gap-0.5 text-gray-600 hover:text-[#1A1A1A] transition-colors">
               <svg width={24} height={24} fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
                 <rect x="1" y="3" width="15" height="13" rx="1" /><path d="M16 8h4l3 3v5h-7V8z" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" />
               </svg>
@@ -390,12 +390,12 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
 
             {/* Cart with hover dropdown */}
             <div ref={cartRef} className="relative" onMouseEnter={() => setCartOpen(true)} onMouseLeave={() => setCartOpen(false)}>
-              <button className="flex flex-col items-center gap-0.5 text-gray-600 hover:text-[#111111] transition-colors">
+              <button className="flex flex-col items-center gap-0.5 text-gray-600 hover:text-[#1A1A1A] transition-colors">
                 <div className="relative">
                   <svg width={26} height={26} fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
                     <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0" />
                   </svg>
-                  <span className="absolute -top-2 -right-2 text-[#111111] flex items-center justify-center rounded-full font-bold" style={{ background: SECONDARY, width: 18, height: 18, fontSize: 11, lineHeight: "18px" }}>{totalItems}</span>
+                  <span className="absolute -top-2 -right-2 text-[#1A1A1A] flex items-center justify-center rounded-full font-bold" style={{ background: SECONDARY, width: 18, height: 18, fontSize: 11, lineHeight: "18px" }}>{totalItems}</span>
                 </div>
                 <span style={{ fontSize: 11 }}>৳{totalPrice.toLocaleString("en-US")}</span>
               </button>
@@ -426,7 +426,7 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                           <div style={{ display: "flex", justifyContent: "center", marginBottom: 10 }}>
                             <span style={{ fontSize: 14, fontWeight: 700, color: "#333" }}>TOTAL : ৳{totalPrice.toLocaleString("en-US")}</span>
                           </div>
-                          <button onClick={handleCartCheckout} style={{ width: "100%", background: SECONDARY, color: "#111111", border: "none", borderRadius: 6, padding: "12px 0", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
+                          <button onClick={handleCartCheckout} style={{ width: "100%", background: SECONDARY, color: "#1A1A1A", border: "none", borderRadius: 6, padding: "12px 0", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
                             Order Now
                           </button>
                         </div>
@@ -495,18 +495,18 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                                 fontSize: 14,
                                 padding: "10px 18px",
                                 backgroundColor: isSubActive && !activeChild ? SECONDARY : "",
-                                color: isSubActive && !activeChild ? "#111111" : "#374151",
+                                color: isSubActive && !activeChild ? "#1A1A1A" : "#374151",
                               }}
                               onMouseEnter={(e) => {
                                 e.currentTarget.style.backgroundColor = SECONDARY;
-                                e.currentTarget.style.color = "#111111";
+                                e.currentTarget.style.color = "#1A1A1A";
                               }}
                               onMouseLeave={(e) => {
                                 e.currentTarget.style.backgroundColor = isSubActive && !activeChild ? SECONDARY : "";
-                                e.currentTarget.style.color = isSubActive && !activeChild ? "#111111" : "";
+                                e.currentTarget.style.color = isSubActive && !activeChild ? "#1A1A1A" : "";
                               }}
                             >
-                              <span style={{ color: isSubActive && !activeChild ? "#111111" : PRIMARY, fontSize: 16, lineHeight: 1 }}>›</span>
+                              <span style={{ color: isSubActive && !activeChild ? "#1A1A1A" : PRIMARY, fontSize: 16, lineHeight: 1 }}>›</span>
                               <span style={{ flex: 1 }}>{sub.label}</span>
                             </Link>
 
@@ -522,18 +522,18 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                                     fontSize: 13,
                                     padding: "8px 18px 8px 34px",
                                     backgroundColor: isChildActive ? SECONDARY : "#fafafa",
-                                    color: isChildActive ? "#111111" : "#4b5563",
+                                    color: isChildActive ? "#1A1A1A" : "#4b5563",
                                   }}
                                   onMouseEnter={(e) => {
                                     e.currentTarget.style.backgroundColor = SECONDARY;
-                                    e.currentTarget.style.color = "#111111";
+                                    e.currentTarget.style.color = "#1A1A1A";
                                   }}
                                   onMouseLeave={(e) => {
                                     e.currentTarget.style.backgroundColor = isChildActive ? SECONDARY : "#fafafa";
-                                    e.currentTarget.style.color = isChildActive ? "#111111" : "#4b5563";
+                                    e.currentTarget.style.color = isChildActive ? "#1A1A1A" : "#4b5563";
                                   }}
                                 >
-                                  <span style={{ color: isChildActive ? "#111111" : PRIMARY, fontSize: 14, lineHeight: 1 }}>›</span>
+                                  <span style={{ color: isChildActive ? "#1A1A1A" : PRIMARY, fontSize: 14, lineHeight: 1 }}>›</span>
                                   {child.label}
                                 </Link>
                               );
@@ -591,7 +591,7 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                               style={{ fontSize: 13, padding: "10px 28px", borderColor: "rgba(255,255,255,0.1)" }}
                               onClick={() => setMobileOpen(false)}
                             >
-                              <span style={{ color: SECONDARY }}>›</span>
+                              <span style={{ color: PRIMARY }}>›</span>
                               {sub.label}
                             </Link>
                             {(sub.childItems || []).map((child) => (
@@ -602,7 +602,7 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                                 style={{ fontSize: 12, padding: "9px 28px 9px 46px", borderColor: "rgba(255,255,255,0.08)" }}
                                 onClick={() => setMobileOpen(false)}
                               >
-                                <span style={{ color: SECONDARY }}>›</span>
+                                <span style={{ color: PRIMARY }}>›</span>
                                 {child.label}
                               </Link>
                             ))}
