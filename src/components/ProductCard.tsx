@@ -8,14 +8,8 @@ import { useCart } from "@/context/CartContext";
 import { useCustomer } from "@/context/CustomerContext";
 import { trackPixelEvent } from "@/lib/pixel";
 
-<<<<<<< HEAD
 const PRIMARY   = "#111111";
 const SECONDARY = "#FFC400";
-=======
-const PRIMARY   = "#1A1A1A";
-const SECONDARY = "#FFC107";
-const SECONDARY_TEXT = "#B7791F";
->>>>>>> e349dbe0156ebb8b988549348380147ece43e013
 const ACCENT    = "#D7262E";
 const formatPrice = (value: number) => value.toLocaleString("en-US");
 
@@ -118,12 +112,8 @@ export default function ProductCard({ product }: { product: Product }) {
           <span className="text-gray-400 line-through" style={{ fontSize: 11 }}>
             ৳{formatPrice(product.originalPrice)}
           </span>
-<<<<<<< HEAD
           <span className="font-extrabold" style={{ color: PRIMARY, fontSize: 13 }}>
             {product.hasVariants && (product.priceMax ?? 0) > product.discountedPrice ? "From " : ""}
-=======
-          <span className="font-extrabold" style={{ color: SECONDARY_TEXT, fontSize: 13 }}>
->>>>>>> e349dbe0156ebb8b988549348380147ece43e013
             ৳{formatPrice(product.discountedPrice)}
           </span>
         </div>
@@ -140,13 +130,8 @@ export default function ProductCard({ product }: { product: Product }) {
           <button
             onClick={handleAddToCart}
             disabled={product.inStock === false}
-<<<<<<< HEAD
             className="flex items-center justify-center text-[#111111] transition-colors disabled:cursor-not-allowed disabled:opacity-70"
             style={{ width: 32, height: 28, borderRadius: 3, background: product.inStock === false ? "#b8bec8" : added ? "#16a34a" : SECONDARY }}
-=======
-            className="flex items-center justify-center text-white transition-colors disabled:cursor-not-allowed disabled:opacity-70"
-            style={{ width: 32, height: 28, borderRadius: 3, background: product.inStock === false ? "#b8bec8" : added ? "#16a34a" : SECONDARY, color: product.inStock !== false && !added ? PRIMARY : "#fff" }}
->>>>>>> e349dbe0156ebb8b988549348380147ece43e013
             title="Add to Cart"
           >
             {added ? (
