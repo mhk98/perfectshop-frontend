@@ -32,6 +32,10 @@ function applyFavicon(url: string | null) {
   if (!existing) document.head.appendChild(link);
 }
 
+// The uploaded logo can be a multi-MB PNG; let Next.js resize Cloudinary logos
+// (allowed in next.config images.remotePatterns) and leave other sources as-is.
+const isOptimizableLogo = (src: string) => src.startsWith("https://res.cloudinary.com/");
+
 function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
   const [mobileOpen,    setMobileOpen]    = useState(false);
   const [openDrop,      setOpenDrop]      = useState<string | null>(null);
@@ -183,7 +187,7 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
             <Link href="/" style={{ flex: 1, minWidth: 0, display: "flex", justifyContent: "center" }}>
               <div style={{ position: "relative", width: "100%", maxWidth: 110, height: 44 }}>
                 {resolvedLogo && (
-                  <img src={resolvedLogo} alt="Logo" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                  <SafeImage sources={[resolvedLogo]} alt="Logo" fill sizes="110px" unoptimized={!isOptimizableLogo(resolvedLogo)} style={{ objectFit: "contain" }} />
                 )}
               </div>
             </Link>
@@ -319,7 +323,7 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
           <Link href="/" className="flex items-center">
             <div style={{ position: "relative", width: "100%", maxWidth: 260, height: 70 }}>
               {resolvedLogo && (
-                <img src={resolvedLogo} alt="Logo" style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "left center" }} />
+                <SafeImage sources={[resolvedLogo]} alt="Logo" fill sizes="260px" unoptimized={!isOptimizableLogo(resolvedLogo)} style={{ objectFit: "contain", objectPosition: "left center" }} />
               )}
             </div>
           </Link>
