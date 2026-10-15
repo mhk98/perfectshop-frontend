@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import MarqueeBanner from "@/components/MarqueeBanner";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import { SiteFooter } from "@/components/SiteChrome";
 import FloatingContact from "@/components/FloatingContact";
 import ScrollToTop from "@/components/ScrollToTop";
 import ProductDetailClient from "@/components/ProductDetailClient";
@@ -11,8 +11,16 @@ import { fetchSiteSettings, type SiteSetting } from "@/services/settingService";
 import { fetchNavItems } from "@/services/menuService";
 import {
   fetchDeliveryCharges,
-  getDeliveryChargeText,
+  getDeliveryChargeLines,
 } from "@/services/shippingChargeService";
+
+// Render each product on its first visit, then serve it from the cache and
+// re-render in the background at most once a minute.
+export const revalidate = 60;
+
+export async function generateStaticParams() {
+  return [];
+}
 
 export default async function ProductDetailPage({
   params,
@@ -24,7 +32,7 @@ export default async function ProductDetailPage({
   if (isNaN(productId)) notFound();
 
   const [product, settings, deliveryCharges, navItems] = await Promise.all([
-    fetchProductById(productId).catch(() => null),
+    fetchProductById(productId),
     fetchSiteSettings().catch(() => ({}) as Partial<SiteSetting>),
     fetchDeliveryCharges().catch(() => []),
     fetchNavItems().catch(() => []),
@@ -35,7 +43,10 @@ export default async function ProductDetailPage({
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
       <MarqueeBanner text={(settings as SiteSetting).marqueeText ?? null} />
-      <Header logoUrl={(settings as SiteSetting).logoUrl ?? null} navItems={navItems} />
+      <Header
+        logoUrl={(settings as SiteSetting).logoUrl ?? null}
+        navItems={navItems}
+      />
 
       <main className="flex-1 py-3">
         <Container>
@@ -112,21 +123,11 @@ export default async function ProductDetailPage({
                     </span>
                     <div>
                       <p className="delivery-title">Regular Delivery Charge</p>
-                      {deliveryCharges.length > 0 ? (
-                        deliveryCharges.map((charge) => {
-                          const text = getDeliveryChargeText(charge);
-                          if (!text) return null;
-                          return (
-                            <p key={charge.Id} className="delivery-copy">
-                              • {text}
-                            </p>
-                          );
-                        })
-                      ) : (
-                        <p className="delivery-copy">
-                          • ঢাকার ভিতরে ৮০ টাকা • ঢাকার বাইরে ১২০ টাকা
+                      {getDeliveryChargeLines(deliveryCharges).map((text) => (
+                        <p key={text} className="delivery-copy">
+                          • {text}
                         </p>
-                      )}
+                      ))}
                     </div>
                   </div>
                   {/* COD */}
@@ -180,7 +181,7 @@ export default async function ProductDetailPage({
         </Container>
       </main>
 
-      <Footer settings={settings as Partial<SiteSetting>} />
+      <SiteFooter />
       <FloatingContact settings={settings as Partial<SiteSetting>} />
       <ScrollToTop />
     </div>

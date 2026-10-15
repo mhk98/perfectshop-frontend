@@ -7,7 +7,7 @@ import PopupBanner from "@/components/PopupBanner";
 import TopCategories from "@/components/TopCategories";
 import ProductSection from "@/components/ProductSection";
 import BrandsSection from "@/components/BrandsSection";
-import Footer from "@/components/Footer";
+import { SiteFooter } from "@/components/SiteChrome";
 import FloatingContact from "@/components/FloatingContact";
 import ScrollToTop from "@/components/ScrollToTop";
 import { fetchStorefrontProducts } from "@/services/productService";
@@ -53,8 +53,7 @@ export default async function Home({
     fetchBanners().catch(() => ({ slides: [] as BannerItem[], sideBanners: [] as BannerItem[], popupBanners: [] as BannerItem[] })),
     fetchBrands().catch(() => [] as BrandItem[]),
     fetchCategoryMenus().catch(() => [] as CategoryMenuItem[]),
-    // Same /menu/public endpoint + cache options as fetchCategoryMenus above,
-    // so Next.js dedupes this into the same network request automatically.
+    // Shares the per-render menu request with fetchCategoryMenus above.
     fetchNavItems().catch(() => [] as NavItem[]),
   ]);
   allProducts   = productsResult.products;
@@ -99,7 +98,7 @@ export default async function Home({
           <div style={{ width: "90%", margin: "16px auto 0" }}>
             <Link
               href="/"
-              style={{ fontSize: 13, color: "#C79524", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 4 }}
+              style={{ fontSize: 13, color: "#A87B00", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 4 }}
             >
               ← সব পণ্য দেখুন
             </Link>
@@ -122,7 +121,7 @@ export default async function Home({
 
         {!isFiltered && <BrandsSection brands={brands} />}
       </main>
-      <Footer settings={settings} />
+      <SiteFooter />
       <FloatingContact settings={settings} />
       <ScrollToTop />
     </div>

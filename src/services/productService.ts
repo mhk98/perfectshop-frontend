@@ -47,19 +47,16 @@ function uniqueImages(images: string[]): string[] {
 }
 
 function mapToProduct(item: ApiProduct): Product {
-  const sizes: string[] = [];
-  const colors: string[] = [];
-  const variants = Array.isArray(item.variants) ? item.variants : [];
-  if (item.variants && Array.isArray(item.variants)) {
-    item.variants.forEach((v) => {
-      if (v.attribute) sizes.push(v.attribute);
-      if (v.colorName) colors.push(v.colorName);
-      if (v.size) sizes.push(...(Array.isArray(v.size) ? v.size : [v.size]));
-      if (v.color) colors.push(...(Array.isArray(v.color) ? v.color : [v.color]));
-    });
-  }
-  const uniqueSizes = [...new Set(sizes.filter(Boolean))];
-  const uniqueColors = [...new Set(colors.filter(Boolean))];
+  const variants = (Array.isArray(item.variants) ? item.variants : []).map((v) => ({
+    id: Number(v.id),
+    options: v.options || {},
+    oldPrice: Number(v.oldPrice || v.newPrice || 0),
+    newPrice: Number(v.newPrice || 0),
+    stock: Number(v.stock || 0),
+    inStock: Boolean(v.inStock),
+    image: v.image ? toImgUrl(v.image) : null,
+  }));
+  const options = (item.options || []).filter((option) => option.values?.length);
   const originalPrice = Number(item.original_price ?? item.sale_price ?? 0);
   const discountedPrice = Number(item.sale_price ?? item.original_price ?? 0);
   const apiDiscount = Number(item.discount ?? 0);
@@ -83,9 +80,10 @@ function mapToProduct(item: ApiProduct): Product {
     features: item.features || [],
     sku: item.sku ?? null,
     freeShipping: toBoolean(item.freeShipping),
-    hasVariants: uniqueSizes.length > 0 || uniqueColors.length > 0,
-    sizes: uniqueSizes.length > 0 ? uniqueSizes : undefined,
-    colors: uniqueColors.length > 0 ? uniqueColors : undefined,
+    hasVariants: variants.length > 1,
+    priceMin: Number(item.price_min ?? discountedPrice),
+    priceMax: Number(item.price_max ?? discountedPrice),
+    options,
     variants,
     inStock: item.inStock,
     category: item.category,
@@ -94,16 +92,15 @@ function mapToProduct(item: ApiProduct): Product {
   };
 }
 
+// Returns null only when the product does not exist; network/server errors
+// throw so a cached product page is kept instead of being replaced by a 404.
 export async function fetchProductById(id: number): Promise<Product | null> {
-  try {
-    const res = await fetch(`${BASE}/product/storefront/${id}`, { next: { revalidate: 30 }, signal: AbortSignal.timeout(15_000) } as RequestInit);
-    if (!res.ok) return null;
-    const json = await res.json();
-    if (!json.data) return null;
-    return mapToProduct(json.data as ApiProduct);
-  } catch {
-    return null;
-  }
+  const res = await fetch(`${BASE}/product/storefront/${id}`, { next: { revalidate: 60 }, signal: AbortSignal.timeout(15_000) } as RequestInit);
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`Failed to fetch product ${id}: ${res.status}`);
+  const json = await res.json();
+  if (!json.data) return null;
+  return mapToProduct(json.data as ApiProduct);
 }
 
 export async function fetchStorefrontProducts(
@@ -115,7 +112,7 @@ export async function fetchStorefrontProducts(
   if (params.searchTerm?.trim()) qs.set("searchTerm", params.searchTerm.trim());
 
   const raw = await fetch(`${BASE}/product/storefront?${qs.toString()}`, {
-    next: { revalidate: 30 },
+    next: { revalidate: 60 },
     signal: AbortSignal.timeout(15_000),
   } as RequestInit);
   if (!raw.ok) throw new Error("Failed to fetch storefront products");

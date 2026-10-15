@@ -1,8 +1,14 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCheckoutSession } from "@/lib/useCheckoutSession";
 import { createOrder, saveIncompleteOrder } from "@/services/orderService";
-import { getPixelClickData, trackPixelEvent, type PixelUserData } from "@/lib/pixel";
+import {
+  getPixelClickData,
+  trackPixelEvent,
+  type PixelUserData,
+} from "@/lib/pixel";
 import type { CreateOrderPayload } from "@/types/api";
 
 export interface LandingOrderOption {
@@ -12,6 +18,7 @@ export interface LandingOrderOption {
   price: number;
   originalPrice: number;
   image: string;
+  freeShipping?: boolean;
 }
 
 interface SelectedProduct extends LandingOrderOption {
@@ -93,12 +100,20 @@ export default function LandingOrderForm({
   const [success, setSuccess] = useState("");
   const [draftId, setDraftId] = useState<number | undefined>();
   const [deviceId, setDeviceId] = useState("");
+  const checkout = useCheckoutSession();
+  const router = useRouter();
   const addToCartTrackedRef = useRef(false);
   const beginCheckoutTrackedRef = useRef(false);
   const leadTrackedOrderIdRef = useRef<number | undefined>(undefined);
 
-  const deliveryCharge =
-    shipping === "inside" ? deliveryInside : deliveryOutside;
+  // Matches the server: delivery is free only when every selected product ships free.
+  const allFreeShipping =
+    selected.length > 0 && selected.every((item) => item.freeShipping);
+  const deliveryCharge = allFreeShipping
+    ? 0
+    : shipping === "inside"
+      ? deliveryInside
+      : deliveryOutside;
   const subtotal = useMemo(
     () => selected.reduce((sum, item) => sum + item.price * item.qty, 0),
     [selected],
@@ -128,7 +143,11 @@ export default function LandingOrderForm({
     orderId?: string | number,
     userData?: PixelUserData,
   ) => {
-    trackPixelEvent(eventName, { ...pixelData, value, order_id: orderId }, userData);
+    trackPixelEvent(
+      eventName,
+      { ...pixelData, value, order_id: orderId },
+      userData,
+    );
   };
 
   const trackAddToCartOnce = () => {
@@ -218,7 +237,7 @@ export default function LandingOrderForm({
 
   async function saveDraft(nextCustomer = customer) {
     const normalizedPhone = normalizePhone(nextCustomer.phone);
-    if (!normalizedPhone) return;
+    if (!normalizedPhone || checkout.submitting.current) return;
     try {
       const draft = await saveIncompleteOrder(
         buildPayload("incomplete", normalizedPhone, nextCustomer),
@@ -261,6 +280,7 @@ export default function LandingOrderForm({
     customerData = customer,
   ): CreateOrderPayload {
     return {
+      checkoutKey: checkout.getKey(normalizedPhone),
       ...(draftId ? { incompleteOrderId: draftId } : {}),
       deviceId,
       source: "Landing Page",
@@ -296,6 +316,7 @@ export default function LandingOrderForm({
   }
 
   async function placeOrder() {
+    if (checkout.submitting.current) return;
     setError("");
     setSuccess("");
     const normalizedPhone = normalizePhone(customer.phone);
@@ -308,6 +329,7 @@ export default function LandingOrderForm({
       return;
     }
 
+    checkout.submitting.current = true;
     setSaving(true);
     trackBeginCheckoutOnce();
     const pixelUser = { name: customer.name.trim(), phone: normalizedPhone };
@@ -315,14 +337,28 @@ export default function LandingOrderForm({
     try {
       const order = await createOrder(buildPayload("pending", normalizedPhone));
       trackLandingEvent("Purchase", total, order.Id, pixelUser);
-      setSuccess(
-        `${labels.successMessage} Order ID: ${order.orderId || order.Id}`,
+      // invoiceId is the display number (PS-xxxx); orderId is the raw stored value.
+      const invoiceId = order.invoiceId || order.orderId || String(order.Id);
+      // Same hand-off as the cart checkout, so /order-success and re-confirm work alike.
+      window.localStorage.setItem(
+        "kafela_pending_reconfirm_order",
+        JSON.stringify({
+          orderId: order.Id,
+          invoiceId,
+          phone: normalizedPhone,
+          name: customer.name.trim(),
+          total,
+        }),
       );
+      setSuccess(`${labels.successMessage} Order ID: ${invoiceId}`);
       setCustomer({ name: "", phone: "", address: "", note: "" });
       setDraftId(undefined);
+      checkout.complete();
+      router.push(`/order-success?invoiceId=${encodeURIComponent(invoiceId)}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Order create failed.");
     } finally {
+      checkout.submitting.current = false;
       setSaving(false);
     }
   }
@@ -415,6 +451,11 @@ export default function LandingOrderForm({
                       <span className="text-sm font-bold text-neutral-800">
                         {formatMoney(option.price)}৳
                       </span>
+                      {option.freeShipping ? (
+                        <span className="rounded bg-emerald-100 px-2 py-0.5 text-xs font-bold text-emerald-700">
+                          ফ্রি ডেলিভারি
+                        </span>
+                      ) : null}
                     </div>
                   </div>
                 </div>
@@ -476,7 +517,10 @@ export default function LandingOrderForm({
                   >
                     ●
                   </span>{" "}
-                  {labels.insideDhakaLabel} {formatMoney(deliveryInside)} টাকা
+                  {labels.insideDhakaLabel}{" "}
+                  {allFreeShipping
+                    ? "ফ্রি ডেলিভারি"
+                    : `${formatMoney(deliveryInside)} টাকা`}
                 </span>
               </button>
               <button
@@ -494,7 +538,10 @@ export default function LandingOrderForm({
                   >
                     ●
                   </span>{" "}
-                  {labels.outsideDhakaLabel} {formatMoney(deliveryOutside)} টাকা
+                  {labels.outsideDhakaLabel}{" "}
+                  {allFreeShipping
+                    ? "ফ্রি ডেলিভারি"
+                    : `${formatMoney(deliveryOutside)} টাকা`}
                 </span>
               </button>
             </div>
@@ -553,7 +600,11 @@ export default function LandingOrderForm({
                 </div>
               ))}
               <SummaryRow label={labels.subtotalLabel} value={subtotal} />
-              <SummaryRow label="Delivery Charge" value={deliveryCharge} />
+              <SummaryRow
+                label="Delivery Charge"
+                value={deliveryCharge}
+                text={allFreeShipping ? "ফ্রি" : undefined}
+              />
               <SummaryRow label={labels.totalLabel} value={total} strong />
             </div>
           </aside>
@@ -590,10 +641,12 @@ function LandingInput({
 function SummaryRow({
   label,
   value,
+  text,
   strong,
 }: {
   label: string;
   value: number;
+  text?: string;
   strong?: boolean;
 }) {
   return (
@@ -601,7 +654,7 @@ function SummaryRow({
       className={`flex items-center justify-between p-3 ${strong ? "text-lg font-black" : "text-sm font-bold"}`}
     >
       <span>{label}</span>
-      <span>{formatMoney(value)}৳</span>
+      <span>{text ?? `${formatMoney(value)}৳`}</span>
     </div>
   );
 }
