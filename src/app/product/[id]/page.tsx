@@ -123,9 +123,25 @@ export default async function ProductDetailPage({
                     </span>
                     <div>
                       <p className="delivery-title">Regular Delivery Charge</p>
+<<<<<<< HEAD
                       {getDeliveryChargeLines(deliveryCharges).map((text) => (
                         <p key={text} className="delivery-copy">
                           • {text}
+=======
+                      {deliveryCharges.length > 0 ? (
+                        deliveryCharges.map((charge) => {
+                          const text = getDeliveryChargeText(charge);
+                          if (!text) return null;
+                          return (
+                            <p key={charge.Id} className="delivery-copy">
+                              • {text}
+                            </p>
+                          );
+                        })
+                      ) : (
+                        <p className="delivery-copy">
+                          • ঢাকার ভিতরে ৮০ টাকা • ঢাকার বাইরে ১৩০ টাকা
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
                         </p>
                       ))}
                     </div>

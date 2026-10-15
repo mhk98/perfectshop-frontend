@@ -12,8 +12,13 @@ import { useCustomer } from "@/context/CustomerContext";
 import AccountMenu from "@/components/AccountMenu";
 import { trackPixelEvent } from "@/lib/pixel";
 
+<<<<<<< HEAD
 const PRIMARY   = "#111111";   // logo black
 const SECONDARY = "#FFC400";   // logo yellow
+=======
+const PRIMARY   = "#1A1A1A";   // logo black
+const SECONDARY = "#FFC107";   // logo yellow
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
 
 interface HeaderProps {
   logoUrl?: string | null;
@@ -211,8 +216,13 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                     <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0" />
                   </svg>
                   <span
+<<<<<<< HEAD
                     className="absolute -top-2 -right-2 text-[#111111] flex items-center justify-center rounded-full font-bold"
                     style={{ background: SECONDARY, width: 16, height: 16, fontSize: 10, lineHeight: "16px" }}
+=======
+                    className="absolute -top-2 -right-2 flex items-center justify-center rounded-full font-bold"
+                    style={{ background: SECONDARY, color: PRIMARY, width: 18, height: 18, fontSize: 11, lineHeight: "18px" }}
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
                   >{totalItems}</span>
                 </div>
                 <span style={{ fontSize: 10, whiteSpace: "nowrap" }}>৳{totalPrice.toLocaleString("en-US")}</span>
@@ -245,7 +255,11 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                           <div style={{ display: "flex", justifyContent: "center", marginBottom: 8 }}>
                             <span style={{ fontSize: 13, fontWeight: 700, color: "#333" }}>TOTAL : ৳{totalPrice.toLocaleString("en-US")}</span>
                           </div>
+<<<<<<< HEAD
                           <button onClick={handleCartCheckout} style={{ width: "100%", background: SECONDARY, color: "#111111", border: "none", borderRadius: 6, padding: "10px 0", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
+=======
+                          <button onClick={handleCartCheckout} style={{ width: "100%", background: SECONDARY, color: PRIMARY, border: "none", borderRadius: 6, padding: "10px 0", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
                             Order Now
                           </button>
                         </div>
@@ -395,7 +409,11 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                   <svg width={26} height={26} fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
                     <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0" />
                   </svg>
+<<<<<<< HEAD
                   <span className="absolute -top-2 -right-2 text-[#111111] flex items-center justify-center rounded-full font-bold" style={{ background: SECONDARY, width: 18, height: 18, fontSize: 11, lineHeight: "18px" }}>{totalItems}</span>
+=======
+                  <span className="absolute -top-2 -right-2 flex items-center justify-center rounded-full font-bold" style={{ background: SECONDARY, color: PRIMARY, width: 18, height: 18, fontSize: 11, lineHeight: "18px" }}>{totalItems}</span>
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
                 </div>
                 <span style={{ fontSize: 11 }}>৳{totalPrice.toLocaleString("en-US")}</span>
               </button>
@@ -426,7 +444,11 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                           <div style={{ display: "flex", justifyContent: "center", marginBottom: 10 }}>
                             <span style={{ fontSize: 14, fontWeight: 700, color: "#333" }}>TOTAL : ৳{totalPrice.toLocaleString("en-US")}</span>
                           </div>
+<<<<<<< HEAD
                           <button onClick={handleCartCheckout} style={{ width: "100%", background: SECONDARY, color: "#111111", border: "none", borderRadius: 6, padding: "12px 0", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
+=======
+                          <button onClick={handleCartCheckout} style={{ width: "100%", background: SECONDARY, color: PRIMARY, border: "none", borderRadius: 6, padding: "12px 0", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
                             Order Now
                           </button>
                         </div>
@@ -495,6 +517,7 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                                 fontSize: 14,
                                 padding: "10px 18px",
                                 backgroundColor: isSubActive && !activeChild ? SECONDARY : "",
+<<<<<<< HEAD
                                 color: isSubActive && !activeChild ? "#111111" : "#374151",
                               }}
                               onMouseEnter={(e) => {
@@ -507,6 +530,20 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                               }}
                             >
                               <span style={{ color: isSubActive && !activeChild ? "#111111" : PRIMARY, fontSize: 16, lineHeight: 1 }}>›</span>
+=======
+                                color: isSubActive && !activeChild ? PRIMARY : "#374151",
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.backgroundColor = SECONDARY;
+                                e.currentTarget.style.color = PRIMARY;
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.backgroundColor = isSubActive && !activeChild ? SECONDARY : "";
+                                e.currentTarget.style.color = isSubActive && !activeChild ? PRIMARY : "";
+                              }}
+                            >
+                              <span style={{ color: isSubActive && !activeChild ? PRIMARY : PRIMARY, fontSize: 16, lineHeight: 1 }}>›</span>
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
                               <span style={{ flex: 1 }}>{sub.label}</span>
                             </Link>
 
@@ -522,6 +559,7 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                                     fontSize: 13,
                                     padding: "8px 18px 8px 34px",
                                     backgroundColor: isChildActive ? SECONDARY : "#fafafa",
+<<<<<<< HEAD
                                     color: isChildActive ? "#111111" : "#4b5563",
                                   }}
                                   onMouseEnter={(e) => {
@@ -534,6 +572,20 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                                   }}
                                 >
                                   <span style={{ color: isChildActive ? "#111111" : PRIMARY, fontSize: 14, lineHeight: 1 }}>›</span>
+=======
+                                    color: isChildActive ? PRIMARY : "#4b5563",
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.backgroundColor = SECONDARY;
+                                    e.currentTarget.style.color = PRIMARY;
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.backgroundColor = isChildActive ? SECONDARY : "#fafafa";
+                                    e.currentTarget.style.color = isChildActive ? PRIMARY : "#4b5563";
+                                  }}
+                                >
+                                  <span style={{ color: isChildActive ? PRIMARY : PRIMARY, fontSize: 14, lineHeight: 1 }}>›</span>
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
                                   {child.label}
                                 </Link>
                               );

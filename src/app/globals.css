@@ -22,7 +22,11 @@
 }
 
 body {
+<<<<<<< HEAD
   background-color: #F6F6F4;
+=======
+  background-color: #FAF8F2;
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
   font-family: "Lato", Arial, Helvetica, sans-serif;
   font-size: 15px;
   color: #333;

@@ -4,7 +4,11 @@
 }
 .header { margin-bottom: 12px; }
 .heading {
+<<<<<<< HEAD
   color: #222;
+=======
+  color: #1A1A1A;
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
   font-size: 16px;
   font-weight: 600;
   line-height: 1.25;
@@ -41,12 +45,24 @@
   overflow-wrap: anywhere;
   transition: color 200ms ease;
 }
+<<<<<<< HEAD
+=======
+.card:hover {
+  border-color: #FFD54F;
+  box-shadow: 0 8px 18px rgb(15 23 42 / 16%);
+}
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
 .card:hover .image { transform: scale(1.035); }
-.card:hover .label { color: #96701a; }
+.card:hover .label { color: #B7791F; }
 .card:focus-visible {
+<<<<<<< HEAD
   outline: 2px solid #FFC400;
   outline-offset: -2px;
   border-radius: 5px;
+=======
+  outline: 2px solid #FFC107;
+  outline-offset: -3px;
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
 }
 @media (max-width: 1023px) {
   .item { width: calc((100% - 40px) / 5); }

@@ -155,7 +155,11 @@ function FooterLink({
           lineHeight: "24px",
           display: "block",
         }}
+<<<<<<< HEAD
         className="hover:text-[#A87B00] transition-colors"
+=======
+        className="hover:text-[#B7791F] transition-colors"
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
       >
         {children}
       </Link>
@@ -373,14 +377,22 @@ export default function Footer({ settings, pages: pagesProp }: Props) {
 
       {/* Copyright */}
       {copyright && (
+<<<<<<< HEAD
       <div className="bg-[#0A0A0A] py-3.5 text-center">
+=======
+      <div className="bg-[#111111] py-3.5 text-center">
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
         <p style={{ fontSize: 13, color: "#aaa" }}>
           {copyrightMain}{" "}
           {copyrightBrand && (
             <a
               href="#"
               className="hover:underline"
+<<<<<<< HEAD
               style={{ color: "#FFC400" }}
+=======
+              style={{ color: "#FFC107" }}
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
             >
               {copyrightBrand}
             </a>

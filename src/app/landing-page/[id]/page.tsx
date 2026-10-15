@@ -15,6 +15,10 @@ import {
   DEFAULT_OUTSIDE_DHAKA_CHARGE,
 } from "@/services/shippingChargeService";
 import LandingOrderForm, { LandingOrderOption } from "./LandingOrderForm";
+import {
+  MIN_DHAKA_CHARGE,
+  MIN_OUTSIDE_DHAKA_CHARGE,
+} from "@/services/shippingChargeService";
 
 type PageProps = {
   params: Promise<{ id: string }>;
@@ -89,7 +93,11 @@ function buildProductOptions(
         toNumber(page.originalPrice, 2500),
       ),
       image: toImageUrl(String(item.image || page.bannerImageUrl || image)),
+<<<<<<< HEAD
       freeShipping: isFreeShipping(item.productId),
+=======
+      freeShipping: item.freeShipping === true,
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
     }))
     .filter((item) => item.name && item.price > 0);
 
@@ -103,7 +111,11 @@ function buildProductOptions(
       price: toNumber(page.price, 0),
       originalPrice: toNumber(page.originalPrice, 0),
       image: toImageUrl(image),
+<<<<<<< HEAD
       freeShipping: isFreeShipping(page.productId),
+=======
+      freeShipping: page.freeShipping === true,
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
     },
   ];
 }
@@ -140,11 +152,16 @@ export default async function LandingPage({ params }: PageProps) {
     page.phone || header?.supportPhone || settings.phone || "",
   ).trim();
   const whyLines = textLines(page.whyChooseUs || "");
+<<<<<<< HEAD
   // Admin form: "Problem Section Text" saves to shortDescription ("Size Section Text" is
   // description). The problem section shows its own field; description is only a fallback
   // for older pages that never filled shortDescription.
   const descriptionLines = textLines(
     page.shortDescription || page.description || "",
+=======
+  const descriptionLines = textLines(
+    page.description || page.shortDescription || "",
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
   );
   const videoEmbedUrl = getVideoEmbedUrl(page.video);
   const ctaText = String(regularData.ctaText || "অর্ডার করতে ক্লিক করুন");
@@ -152,6 +169,7 @@ export default async function LandingPage({ params }: PageProps) {
     regularData.orderTitle ||
       "অর্ডার করতে আপনার সঠিক তথ্য দিয়ে নিচের ফর্মটি সম্পূর্ণ পূরণ করুন।",
   );
+<<<<<<< HEAD
   // Never below the site-wide minimum the order API charges.
   const deliveryInside = Math.max(
     toNumber(regularData.deliveryInside, 0),
@@ -160,6 +178,15 @@ export default async function LandingPage({ params }: PageProps) {
   const deliveryOutside = Math.max(
     toNumber(regularData.deliveryOutside, 0),
     DEFAULT_OUTSIDE_DHAKA_CHARGE,
+=======
+  const deliveryInside = Math.max(
+    toNumber(regularData.deliveryInside, MIN_DHAKA_CHARGE),
+    MIN_DHAKA_CHARGE,
+  );
+  const deliveryOutside = Math.max(
+    toNumber(regularData.deliveryOutside, MIN_OUTSIDE_DHAKA_CHARGE),
+    MIN_OUTSIDE_DHAKA_CHARGE,
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
   );
   const headingItems = buildHeadingItems(regularData.headings);
   const featureSectionTitle = String(regularData.featureSectionTitle || "");
@@ -324,10 +351,16 @@ export default async function LandingPage({ params }: PageProps) {
                   {page.descriptionTitle}
                 </h2>
               ) : null}
+<<<<<<< HEAD
               <ChecklistParagraphs
                 lines={descriptionLines}
                 color={colors.fontColor}
                 headingColor={colors.headingColor}
+=======
+              <Paragraphs
+                lines={descriptionLines}
+                color={colors.fontColor}
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
                 className="mx-auto mt-6 max-w-4xl"
               />
               {videoEmbedUrl ? (
@@ -402,10 +435,16 @@ export default async function LandingPage({ params }: PageProps) {
                   {page.whyChooseTitle}
                 </h2>
               ) : null}
+<<<<<<< HEAD
               <ChecklistParagraphs
                 lines={whyLines}
                 color={colors.fontColor}
                 headingColor={colors.headingColor}
+=======
+              <Paragraphs
+                lines={whyLines}
+                color={colors.fontColor}
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
                 className="mx-auto mt-6 max-w-4xl font-semibold"
               />
               {phone ? (
@@ -562,6 +601,7 @@ function TopStrip({
   );
 }
 
+<<<<<<< HEAD
 // A leading check mark or any emoji (✅ ✔ 🛒 ⭐ 🚚 …), with an optional variation selector.
 const CHECK_MARK_PATTERN = /^(\p{Extended_Pictographic}️?)\s*/u;
 
@@ -574,11 +614,19 @@ function ChecklistParagraphs({
   lines,
   color,
   headingColor,
+=======
+function Paragraphs({
+  lines,
+  color,
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
   className = "mt-8",
 }: {
   lines: string[];
   color?: string;
+<<<<<<< HEAD
   headingColor?: string;
+=======
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
   className?: string;
 }) {
   if (!lines.length) return null;
@@ -596,6 +644,7 @@ function ChecklistParagraphs({
       className={`space-y-3 text-base leading-8 ${className}`}
       style={{ color }}
     >
+<<<<<<< HEAD
       {groups.map((group, index) =>
         group.checks ? (
           <ul key={index} className="mx-auto w-fit space-y-3 text-left">
@@ -629,6 +678,11 @@ function ChecklistParagraphs({
           })
         ),
       )}
+=======
+      {lines.map((line) => (
+        <p key={line}>{line}</p>
+      ))}
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
     </div>
   );
 }

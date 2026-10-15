@@ -7,9 +7,15 @@ export interface ShippingCharge {
   date?: string | null;
 }
 
+<<<<<<< HEAD
 // Also the minimum, matching the order API: lower configured charges are raised to these.
 export const DEFAULT_DHAKA_CHARGE = 80;
 export const DEFAULT_OUTSIDE_DHAKA_CHARGE = 130;
+=======
+// Minimum delivery charges; lower values coming from the backend are raised to these.
+export const MIN_DHAKA_CHARGE = 80;
+export const MIN_OUTSIDE_DHAKA_CHARGE = 130;
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
 
 const toAmount = (value: ShippingCharge["amount"]): number | null => {
   const amount = Number(value);
@@ -43,7 +49,11 @@ export function getDeliveryChargeForDistrict(
   if (!district) return 0;
 
   const isDhaka = district.toLowerCase() === "dhaka";
+<<<<<<< HEAD
   const minimum = isDhaka ? DEFAULT_DHAKA_CHARGE : DEFAULT_OUTSIDE_DHAKA_CHARGE;
+=======
+  const minimum = isDhaka ? MIN_DHAKA_CHARGE : MIN_OUTSIDE_DHAKA_CHARGE;
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
   const matcher = isDhaka ? hasInsideDhakaText : hasOutsideDhakaText;
   const matched = charges.find((charge) => matcher(String(charge.note || "")));
   const matchedAmount = matched ? toAmount(matched.amount) : null;
@@ -56,6 +66,7 @@ export function getDeliveryChargeForDistrict(
   return minimum;
 }
 
+<<<<<<< HEAD
 // Built from the charged amounts so the text never shows a rate below the minimum.
 export function getDeliveryChargeLines(charges: ShippingCharge[]): string[] {
   const taka = (amount: number) => amount.toLocaleString("bn-BD");
@@ -63,4 +74,23 @@ export function getDeliveryChargeLines(charges: ShippingCharge[]): string[] {
     `ঢাকার ভিতরে ${taka(getDeliveryChargeForDistrict(charges, "dhaka"))} টাকা`,
     `ঢাকার বাইরে ${taka(getDeliveryChargeForDistrict(charges, "outside"))} টাকা`,
   ];
+=======
+export function getDeliveryChargeText(charge: ShippingCharge): string {
+  const note = String(charge.note || "").trim();
+  const amount = toAmount(charge.amount);
+  const area = hasInsideDhakaText(note)
+    ? { label: "ঢাকার ভিতরে", minimum: MIN_DHAKA_CHARGE }
+    : hasOutsideDhakaText(note)
+      ? { label: "ঢাকার বাইরে", minimum: MIN_OUTSIDE_DHAKA_CHARGE }
+      : null;
+  if (area && (amount === null || amount < area.minimum)) {
+    return `${area.label} ${area.minimum.toLocaleString("bn-BD")} টাকা`;
+  }
+  const noteHasAmount = /[0-9০-৯]/.test(note);
+  if (note && amount !== null && !noteHasAmount) {
+    return `${note} - ৳${amount.toLocaleString("en-US")}`;
+  }
+  if (note) return note;
+  return amount !== null ? `ডেলিভারি চার্জ ৳${amount.toLocaleString("en-US")}` : "";
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
 }

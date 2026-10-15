@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+<<<<<<< HEAD
 import { useRouter } from "next/navigation";
+=======
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
 import { useCheckoutSession } from "@/lib/useCheckoutSession";
 import { createOrder, saveIncompleteOrder } from "@/services/orderService";
 import {
@@ -101,15 +104,24 @@ export default function LandingOrderForm({
   const [draftId, setDraftId] = useState<number | undefined>();
   const [deviceId, setDeviceId] = useState("");
   const checkout = useCheckoutSession();
+<<<<<<< HEAD
   const router = useRouter();
+=======
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
   const addToCartTrackedRef = useRef(false);
   const beginCheckoutTrackedRef = useRef(false);
   const leadTrackedOrderIdRef = useRef<number | undefined>(undefined);
 
+<<<<<<< HEAD
   // Matches the server: delivery is free only when every selected product ships free.
   const allFreeShipping =
     selected.length > 0 && selected.every((item) => item.freeShipping);
   const deliveryCharge = allFreeShipping
+=======
+  const allItemsFreeShipping =
+    selected.length > 0 && selected.every((item) => item.freeShipping === true);
+  const deliveryCharge = allItemsFreeShipping
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
     ? 0
     : shipping === "inside"
       ? deliveryInside
@@ -354,7 +366,10 @@ export default function LandingOrderForm({
       setCustomer({ name: "", phone: "", address: "", note: "" });
       setDraftId(undefined);
       checkout.complete();
+<<<<<<< HEAD
       router.push(`/order-success?invoiceId=${encodeURIComponent(invoiceId)}`);
+=======
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
     } catch (err) {
       setError(err instanceof Error ? err.message : "Order create failed.");
     } finally {
@@ -518,7 +533,11 @@ export default function LandingOrderForm({
                     ●
                   </span>{" "}
                   {labels.insideDhakaLabel}{" "}
+<<<<<<< HEAD
                   {allFreeShipping
+=======
+                  {allItemsFreeShipping
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
                     ? "ফ্রি ডেলিভারি"
                     : `${formatMoney(deliveryInside)} টাকা`}
                 </span>
@@ -539,7 +558,11 @@ export default function LandingOrderForm({
                     ●
                   </span>{" "}
                   {labels.outsideDhakaLabel}{" "}
+<<<<<<< HEAD
                   {allFreeShipping
+=======
+                  {allItemsFreeShipping
+>>>>>>> e349dbe0156ebb8b988549348380147ece43e013
                     ? "ফ্রি ডেলিভারি"
                     : `${formatMoney(deliveryOutside)} টাকা`}
                 </span>
