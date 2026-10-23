@@ -32,7 +32,7 @@ export default function ProductSection({
           </h2>
           <Link
             href={`/?menu=${encodeURIComponent(menuParam ?? title)}`}
-            className="border text-[#1A1A1A] border-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-white transition-colors font-semibold whitespace-nowrap"
+            className="border text-[#111827] border-[#111827] hover:bg-[#FFB800] hover:border-[#FFB800] hover:text-[#111827] transition-colors font-semibold whitespace-nowrap"
             style={{ borderRadius: 2, padding: "3px 10px", fontSize: 11 }}
           >
             View All

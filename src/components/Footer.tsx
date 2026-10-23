@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "@/components/AppImage";
+import Image from "next/image";
 import { fetchPublicPages, type WebsitePage } from "@/services/pageService";
 import { fetchSiteSettings, type SiteSetting } from "@/services/settingService";
 
@@ -155,7 +155,7 @@ function FooterLink({
           lineHeight: "24px",
           display: "block",
         }}
-        className="hover:text-[#A67C00] transition-colors"
+        className="hover:text-[#FFB800] transition-colors"
       >
         {children}
       </Link>
@@ -205,7 +205,7 @@ export default function Footer({ settings, pages: pagesProp }: Props) {
   const phone = footerConfig.phone || s.phone || null;
   const email = footerConfig.email || s.email || null;
   const copyright = s.copyrightText || null;
-  const footerLogoUrl = footerConfig.logoUrl || logoUrl;
+  const footerLogoUrl = footerConfig.logoUrl || logoUrl || "/logo.png";
   const hasContactInfo = Boolean(footerLogoUrl || address || phone || email);
 
   // Split copyright into text + brand link if it contains "Developed By"
@@ -373,14 +373,14 @@ export default function Footer({ settings, pages: pagesProp }: Props) {
 
       {/* Copyright */}
       {copyright && (
-      <div className="bg-[#111111] py-3.5 text-center">
+      <div className="bg-[#111827] py-3.5 text-center">
         <p style={{ fontSize: 13, color: "#aaa" }}>
           {copyrightMain}{" "}
           {copyrightBrand && (
             <a
               href="#"
               className="hover:underline"
-              style={{ color: "#FFC107" }}
+              style={{ color: "#FFB800" }}
             >
               {copyrightBrand}
             </a>

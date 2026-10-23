@@ -21,6 +21,18 @@ export default function OrderModal({ product, onClose }: OrderModalProps) {
   const { addToCart } = useCart();
   const router = useRouter();
 
+  const [added, setAdded] = useState(false);
+
+  const handleAddToCartModal = () => {
+    if (!canBuy) return;
+    addToCart(product, qty, selection.selectedVariant);
+    setAdded(true);
+    setTimeout(() => {
+      setAdded(false);
+      onClose();
+    }, 700);
+  };
+
   const handleOrder = () => {
     if (!canBuy) return;
     addToCart(product, qty, selection.selectedVariant);
@@ -53,7 +65,7 @@ export default function OrderModal({ product, onClose }: OrderModalProps) {
         <div
           className="flex items-center"
           style={{
-            background: "#1A1A1A", borderRadius: "8px 8px 0 0",
+            background: "#111827", borderRadius: "8px 8px 0 0", borderBottom: "2px solid #FFB800",
             height: 58, paddingLeft: 28, paddingRight: 28,
           }}
         >
@@ -125,15 +137,39 @@ export default function OrderModal({ product, onClose }: OrderModalProps) {
                   >+</button>
                 </div>
 
-                {/* Order Now button */}
-                <button
-                  onClick={handleOrder}
-                  disabled={!canBuy}
-                  className="flex-1 text-white font-bold tracking-wide transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
-                  style={{ background: "#1A1A1A", borderRadius: 4, height: 42, fontSize: 15 }}
-                >
-                  + ORDER NOW
-                </button>
+                {/* Buttons: Add to Cart + Order Now */}
+                <div className="flex-1 flex gap-2">
+                  <button
+                    type="button"
+                    onClick={handleAddToCartModal}
+                    disabled={!canBuy}
+                    className="flex-1 text-white font-bold tracking-wide transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+                    style={{
+                      background: added ? "#16a34a" : "#FFB800", color: added ? "#fff" : "#111827",
+                      borderRadius: 4,
+                      height: 42,
+                      fontSize: 14,
+                      cursor: canBuy ? "pointer" : "not-allowed",
+                    }}
+                  >
+                    {added ? "✓ ADDED!" : "+ ADD TO CART"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleOrder}
+                    disabled={!canBuy}
+                    className="flex-1 text-white font-bold tracking-wide transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+                    style={{
+                      background: "#111827",
+                      borderRadius: 4,
+                      height: 42,
+                      fontSize: 14,
+                      cursor: canBuy ? "pointer" : "not-allowed",
+                    }}
+                  >
+                    + ORDER NOW
+                  </button>
+                </div>
               </div>
             </div>
           </div>

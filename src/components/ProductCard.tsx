@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import SafeImage from "@/components/SafeImage";
 import Link from "next/link";
 import { Product } from "@/data/products";
@@ -8,9 +9,8 @@ import { useCart } from "@/context/CartContext";
 import { useCustomer } from "@/context/CustomerContext";
 import { trackPixelEvent } from "@/lib/pixel";
 
-const PRIMARY   = "#1A1A1A";
-const SECONDARY = "#FFC107";
-const GOLD_TEXT = "#A67C00";
+const PRIMARY   = "#111827";
+const SECONDARY = "#FFB800";
 const ACCENT    = "#D7262E";
 const formatPrice = (value: number) => value.toLocaleString("en-US");
 
@@ -33,21 +33,49 @@ export default function ProductCard({ product }: { product: Product }) {
     ? { customerId: customer.Id, name: customer.name, phone: customer.phone }
     : undefined;
 
-  const handleAddToCart = () => {
-    // Products with several variants need a choice first.
-    if (product.hasVariants) {
-      setShowModal(true);
-      return;
+  const router = useRouter();
+
+  const handleAddToCart = (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
     }
-    addToCart(product, 1, product.variants?.[0]);
+    if (product.inStock === false) return;
+
+    // Pick first available in-stock variant, or first variant, or null
+    const defaultVariant =
+      product.variants?.find((v) => v.inStock !== false) ||
+      product.variants?.[0] ||
+      null;
+
+    addToCart(product, 1, defaultVariant);
     setAdded(true);
-    setTimeout(() => setAdded(false), 1200);
-    trackPixelEvent("AddToCart", pixelProductData, pixelUserData);
+    setTimeout(() => setAdded(false), 1500);
+
+    const price = defaultVariant ? defaultVariant.newPrice : product.discountedPrice;
+    trackPixelEvent(
+      "AddToCart",
+      {
+        ...pixelProductData,
+        value: price,
+      },
+      pixelUserData
+    );
   };
 
-  const handleOrderNow = () => {
+  const handleOrderNow = (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     if (product.inStock === false) return;
-    setShowModal(true);
+
+    if (product.hasVariants) {
+      setShowModal(true);
+    } else {
+      addToCart(product, 1, null);
+      router.push("/checkout");
+    }
   };
 
   return (
@@ -95,7 +123,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
         <Link
           href={`/product/${product.id}`}
-          className="block overflow-hidden px-2 text-center font-medium text-[#222] transition-colors hover:text-[#1A1A1A]"
+          className="block overflow-hidden px-2 text-center font-medium text-[#222] transition-colors hover:text-[#111827]"
           style={{
             display: "-webkit-box",
             WebkitLineClamp: 2,
@@ -113,7 +141,7 @@ export default function ProductCard({ product }: { product: Product }) {
           <span className="text-gray-400 line-through" style={{ fontSize: 11 }}>
             ৳{formatPrice(product.originalPrice)}
           </span>
-          <span className="font-extrabold" style={{ color: GOLD_TEXT, fontSize: 13 }}>
+          <span className="font-extrabold" style={{ color: PRIMARY, fontSize: 13 }}>
             {product.hasVariants && (product.priceMax ?? 0) > product.discountedPrice ? "From " : ""}
             ৳{formatPrice(product.discountedPrice)}
           </span>
@@ -132,7 +160,7 @@ export default function ProductCard({ product }: { product: Product }) {
             onClick={handleAddToCart}
             disabled={product.inStock === false}
             className="flex items-center justify-center transition-colors disabled:cursor-not-allowed disabled:opacity-70"
-            style={{ width: 32, height: 28, borderRadius: 3, background: product.inStock === false ? "#b8bec8" : added ? "#16a34a" : SECONDARY, color: product.inStock === false || added ? "#fff" : PRIMARY }}
+            style={{ width: 32, height: 28, borderRadius: 3, background: product.inStock === false ? "#b8bec8" : added ? "#16a34a" : SECONDARY, color: added ? "#ffffff" : "#111827" }}
             title="Add to Cart"
           >
             {added ? (

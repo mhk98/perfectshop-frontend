@@ -6,8 +6,8 @@
 // import { Product } from "@/data/products";
 // import { useCart } from "@/context/CartContext";
 
-// const PRIMARY   = "#1A1A1A";
-// const SECONDARY = "#FFC107";
+// const PRIMARY   = "#111111";
+// const SECONDARY = "#FFB800";
 // const fmt = (v: number) => v.toLocaleString("en-US");
 
 // interface Props {
@@ -119,13 +119,13 @@
 //       <div className="product-info">
 
 //         <nav className="text-base text-gray-500 mb-5 flex items-center flex-wrap gap-1">
-//           <Link href="/" className="hover:text-[#FFC107] transition">Home</Link>
+//           <Link href="/" className="hover:text-[#111827] transition">Home</Link>
 //           {product.category && (
 //             <>
 //               <span>/</span>
 //               <Link
 //                 href={`/?menu=${encodeURIComponent(product.category)}`}
-//                 className="hover:text-[#FFC107] transition capitalize"
+//                 className="hover:text-[#111827] transition capitalize"
 //               >
 //                 {product.category}
 //               </Link>
@@ -136,7 +136,7 @@
 //               <span>/</span>
 //               <Link
 //                 href={`/?menu=${encodeURIComponent(product.category ?? "")}&sub=${encodeURIComponent(product.subCategory)}`}
-//                 className="hover:text-[#FFC107] transition capitalize"
+//                 className="hover:text-[#111827] transition capitalize"
 //               >
 //                 {product.subCategory}
 //               </Link>
@@ -306,9 +306,8 @@ import {
   type ProductReview,
 } from "@/services/productService";
 
-const PRIMARY = "#1A1A1A";
-const SECONDARY = "#FFC107";
-const GOLD_TEXT = "#A67C00";
+const PRIMARY = "#111827";
+const SECONDARY = "#FFB800";
 const ACCENT = "#D7262E";
 
 const fmt = (v: number) => v.toLocaleString("en-US");
@@ -471,7 +470,7 @@ export default function ProductDetailClient({
           style={{ marginBottom: "1rem" }}
           className="mb-4 flex flex-wrap items-center gap-1 text-base text-gray-500"
         >
-          <Link href="/" className="transition hover:text-[#A67C00]">
+          <Link href="/" className="transition hover:text-[#111827]">
             Home
           </Link>
 
@@ -480,7 +479,7 @@ export default function ProductDetailClient({
               <span>/</span>
               <Link
                 href={`/?menu=${encodeURIComponent(product.category)}`}
-                className="capitalize transition hover:text-[#A67C00]"
+                className="capitalize transition hover:text-[#111827]"
               >
                 {product.category}
               </Link>
@@ -494,7 +493,7 @@ export default function ProductDetailClient({
                 href={`/?menu=${encodeURIComponent(
                   product.category ?? "",
                 )}&sub=${encodeURIComponent(product.subCategory)}`}
-                className="capitalize transition hover:text-[#A67C00]"
+                className="capitalize transition hover:text-[#111827]"
               >
                 {product.subCategory}
               </Link>
@@ -590,7 +589,7 @@ export default function ProductDetailClient({
           <button
             onClick={handleOrderNow}
             disabled={!canBuy}
-            className="h-[45px] flex-1 rounded-[5px] text-lg font-bold text-[#1A1A1A] transition disabled:opacity-50"
+            className="h-[45px] flex-1 rounded-[5px] text-lg font-extrabold text-[#111827] transition disabled:opacity-50"
             style={{ cursor: "pointer", background: SECONDARY }}
           >
             Order Now
@@ -696,7 +695,7 @@ export default function ProductDetailClient({
               margin: 20px 0;
             }
             .product-description-content :global(a) {
-              color: ${GOLD_TEXT};
+              color: ${SECONDARY};
               text-decoration: underline;
             }
             .product-description-content :global(img) {

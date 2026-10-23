@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect, Suspense } from "react";
 import Link from "next/link";
 import SafeImage from "@/components/SafeImage";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { NavItem, Product } from "@/data/products";
 import { fetchNavItems } from "@/services/menuService";
 import { fetchStorefrontProducts } from "@/services/productService";
@@ -10,10 +10,11 @@ import { fetchSiteSettings } from "@/services/settingService";
 import { useCart } from "@/context/CartContext";
 import { useCustomer } from "@/context/CustomerContext";
 import AccountMenu from "@/components/AccountMenu";
+import ScratchCardMenu from "@/components/ScratchCardMenu";
 import { trackPixelEvent } from "@/lib/pixel";
 
-const PRIMARY   = "#1A1A1A";   // logo black
-const SECONDARY = "#FFC107";   // logo yellow
+const PRIMARY   = "#111827";   // Deep Obsidian Charcoal (Perfect Shop)
+const SECONDARY = "#FFB800";   // Vibrant Golden Yellow (Perfect Shop)
 
 interface HeaderProps {
   logoUrl?: string | null;
@@ -32,17 +33,13 @@ function applyFavicon(url: string | null) {
   if (!existing) document.head.appendChild(link);
 }
 
-// The uploaded logo can be a multi-MB PNG; let Next.js resize Cloudinary logos
-// (allowed in next.config images.remotePatterns) and leave other sources as-is.
-const isOptimizableLogo = (src: string) => src.startsWith("https://res.cloudinary.com/");
-
 function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
   const [mobileOpen,    setMobileOpen]    = useState(false);
   const [openDrop,      setOpenDrop]      = useState<string | null>(null);
   const [mobileExpand,  setMobileExpand]  = useState<string | null>(null);
   const [search,        setSearch]        = useState("");
   const [navItems,      setNavItems]      = useState<NavItem[]>(navItemsProp ?? []);
-  const [resolvedLogo,  setResolvedLogo]  = useState<string | null>(logoUrl || null);
+  const [resolvedLogo,  setResolvedLogo]  = useState<string | null>(logoUrl || "/logo.png");
   // Search dropdown
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchOpen,    setSearchOpen]    = useState(false);
@@ -53,6 +50,9 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
   const searchSeqRef = useRef(0);
   const navRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
+  // The scratch card claim and track pages are focused flows, so they hide product search.
+  const pathname = usePathname();
+  const showSearch = !pathname?.startsWith("/scratch-card");
   const activeMenu = searchParams.get("menu") || "";
   const activeSub  = searchParams.get("sub")  || "";
   const activeChild = searchParams.get("child") || "";
@@ -187,14 +187,16 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
             <Link href="/" style={{ flex: 1, minWidth: 0, display: "flex", justifyContent: "center" }}>
               <div style={{ position: "relative", width: "100%", maxWidth: 110, height: 44 }}>
                 {resolvedLogo && (
-                  <SafeImage sources={[resolvedLogo]} alt="Logo" fill sizes="110px" unoptimized={!isOptimizableLogo(resolvedLogo)} style={{ objectFit: "contain" }} />
+                  <img src={resolvedLogo} alt="Logo" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                 )}
               </div>
             </Link>
 
             {/* Right icons: same three as desktop, with labels */}
             <div style={{ display: "flex", alignItems: "center", gap: 14, flexShrink: 0 }}>
-            <Link href="/track-order" className="flex flex-col items-center gap-0.5 text-gray-600 hover:text-[#1A1A1A] transition-colors">
+            <ScratchCardMenu compact />
+
+            <Link href="/track-order" className="flex flex-col items-center gap-0.5 text-gray-600 hover:text-[#FFB800] transition-colors">
               <svg width={22} height={22} fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
                 <rect x="1" y="3" width="15" height="13" rx="1" /><path d="M16 8h4l3 3v5h-7V8z" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" />
               </svg>
@@ -207,7 +209,7 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
             <div ref={cartRef} className="relative" style={{ flexShrink: 0 }}>
               <button
                 onClick={() => setCartOpen((o) => !o)}
-                className="flex flex-col items-center gap-0.5 text-gray-600 hover:text-[#1A1A1A] transition-colors"
+                className="flex flex-col items-center gap-0.5 text-gray-600 hover:text-[#FFB800] transition-colors"
                 style={{ background: "none", border: "none", cursor: "pointer", padding: 0, position: "relative" }}
               >
                 <div className="relative">
@@ -215,7 +217,7 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                     <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0" />
                   </svg>
                   <span
-                    className="absolute -top-2 -right-2 text-[#1A1A1A] flex items-center justify-center rounded-full font-bold"
+                    className="absolute -top-2 -right-2 text-black flex items-center justify-center rounded-full font-extrabold"
                     style={{ background: SECONDARY, width: 16, height: 16, fontSize: 10, lineHeight: "16px" }}
                   >{totalItems}</span>
                 </div>
@@ -249,7 +251,7 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                           <div style={{ display: "flex", justifyContent: "center", marginBottom: 8 }}>
                             <span style={{ fontSize: 13, fontWeight: 700, color: "#333" }}>TOTAL : ৳{totalPrice.toLocaleString("en-US")}</span>
                           </div>
-                          <button onClick={handleCartCheckout} style={{ width: "100%", background: SECONDARY, color: "#1A1A1A", border: "none", borderRadius: 6, padding: "10px 0", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
+                          <button onClick={handleCartCheckout} style={{ width: "100%", background: SECONDARY, color: "#111827", border: "none", borderRadius: 6, padding: "10px 0", fontSize: 14, fontWeight: 800, cursor: "pointer" }}>
                             Order Now
                           </button>
                         </div>
@@ -263,7 +265,7 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
           </div>
 
           {/* Row 2: Search bar — full width */}
-          <div style={{ padding: "0 14px 10px", position: "relative" }} ref={mobileSearchRef}>
+          <div hidden={!showSearch} style={{ padding: "0 14px 10px", position: "relative" }} ref={mobileSearchRef}>
             <div style={{ display: "flex", alignItems: "center", height: 40, border: `2px solid ${PRIMARY}`, borderRadius: 50, overflow: "hidden" }}>
               <button
                 style={{ width: 44, height: "100%", background: "#f7f7f7", display: "flex", alignItems: "center", justifyContent: "center", border: "none", flexShrink: 0, cursor: "pointer" }}
@@ -323,13 +325,17 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
           <Link href="/" className="flex items-center">
             <div style={{ position: "relative", width: "100%", maxWidth: 260, height: 70 }}>
               {resolvedLogo && (
-                <SafeImage sources={[resolvedLogo]} alt="Logo" fill sizes="260px" unoptimized={!isOptimizableLogo(resolvedLogo)} style={{ objectFit: "contain", objectPosition: "left center" }} />
+                <img src={resolvedLogo} alt="Logo" style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "left center" }} />
               )}
             </div>
           </Link>
 
-          {/* Search */}
-          <div style={{ padding: "0 11px", position: "relative" }} ref={searchRef}>
+          {/* Search (kept in the grid but invisible when hidden, so the icons stay on the right) */}
+          <div
+            aria-hidden={!showSearch}
+            style={{ padding: "0 11px", position: "relative", visibility: showSearch ? undefined : "hidden" }}
+            ref={searchRef}
+          >
             <div style={{ display: "flex", alignItems: "center", height: 44, border: `2px solid ${PRIMARY}`, borderRadius: 50, overflow: "hidden" }}>
               <button
                 style={{ width: "12%", height: "100%", background: "#f7f7f7", display: "flex", alignItems: "center", justifyContent: "center", border: "none", flexShrink: 0, cursor: "pointer" }}
@@ -383,7 +389,11 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
 
           {/* Right icons */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 20 }}>
-            <Link href="/track-order" className="hidden md:flex flex-col items-center gap-0.5 text-gray-600 hover:text-[#1A1A1A] transition-colors">
+            <div className="hidden md:block">
+              <ScratchCardMenu />
+            </div>
+
+            <Link href="/track-order" className="hidden md:flex flex-col items-center gap-0.5 text-gray-600 hover:text-[#FFB800] transition-colors">
               <svg width={24} height={24} fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
                 <rect x="1" y="3" width="15" height="13" rx="1" /><path d="M16 8h4l3 3v5h-7V8z" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" />
               </svg>
@@ -394,12 +404,12 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
 
             {/* Cart with hover dropdown */}
             <div ref={cartRef} className="relative" onMouseEnter={() => setCartOpen(true)} onMouseLeave={() => setCartOpen(false)}>
-              <button className="flex flex-col items-center gap-0.5 text-gray-600 hover:text-[#1A1A1A] transition-colors">
+              <button className="flex flex-col items-center gap-0.5 text-gray-600 hover:text-[#FFB800] transition-colors">
                 <div className="relative">
                   <svg width={26} height={26} fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
                     <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0" />
                   </svg>
-                  <span className="absolute -top-2 -right-2 text-[#1A1A1A] flex items-center justify-center rounded-full font-bold" style={{ background: SECONDARY, width: 18, height: 18, fontSize: 11, lineHeight: "18px" }}>{totalItems}</span>
+                  <span className="absolute -top-2 -right-2 text-black flex items-center justify-center rounded-full font-extrabold" style={{ background: SECONDARY, width: 18, height: 18, fontSize: 11, lineHeight: "18px" }}>{totalItems}</span>
                 </div>
                 <span style={{ fontSize: 11 }}>৳{totalPrice.toLocaleString("en-US")}</span>
               </button>
@@ -430,7 +440,7 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                           <div style={{ display: "flex", justifyContent: "center", marginBottom: 10 }}>
                             <span style={{ fontSize: 14, fontWeight: 700, color: "#333" }}>TOTAL : ৳{totalPrice.toLocaleString("en-US")}</span>
                           </div>
-                          <button onClick={handleCartCheckout} style={{ width: "100%", background: SECONDARY, color: "#1A1A1A", border: "none", borderRadius: 6, padding: "12px 0", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
+                          <button onClick={handleCartCheckout} style={{ width: "100%", background: SECONDARY, color: "#111827", border: "none", borderRadius: 6, padding: "12px 0", fontSize: 14, fontWeight: 800, cursor: "pointer" }}>
                             Order Now
                           </button>
                         </div>
@@ -499,18 +509,18 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                                 fontSize: 14,
                                 padding: "10px 18px",
                                 backgroundColor: isSubActive && !activeChild ? SECONDARY : "",
-                                color: isSubActive && !activeChild ? "#1A1A1A" : "#374151",
+                                color: isSubActive && !activeChild ? "#fff" : "#374151",
                               }}
                               onMouseEnter={(e) => {
                                 e.currentTarget.style.backgroundColor = SECONDARY;
-                                e.currentTarget.style.color = "#1A1A1A";
+                                e.currentTarget.style.color = "#111827";
                               }}
                               onMouseLeave={(e) => {
                                 e.currentTarget.style.backgroundColor = isSubActive && !activeChild ? SECONDARY : "";
-                                e.currentTarget.style.color = isSubActive && !activeChild ? "#1A1A1A" : "";
+                                e.currentTarget.style.color = isSubActive && !activeChild ? "#fff" : "";
                               }}
                             >
-                              <span style={{ color: isSubActive && !activeChild ? "#1A1A1A" : PRIMARY, fontSize: 16, lineHeight: 1 }}>›</span>
+                              <span style={{ color: isSubActive && !activeChild ? "#fff" : PRIMARY, fontSize: 16, lineHeight: 1 }}>›</span>
                               <span style={{ flex: 1 }}>{sub.label}</span>
                             </Link>
 
@@ -526,18 +536,18 @@ function HeaderInner({ logoUrl, navItems: navItemsProp }: HeaderProps) {
                                     fontSize: 13,
                                     padding: "8px 18px 8px 34px",
                                     backgroundColor: isChildActive ? SECONDARY : "#fafafa",
-                                    color: isChildActive ? "#1A1A1A" : "#4b5563",
+                                    color: isChildActive ? "#fff" : "#4b5563",
                                   }}
                                   onMouseEnter={(e) => {
                                     e.currentTarget.style.backgroundColor = SECONDARY;
-                                    e.currentTarget.style.color = "#1A1A1A";
+                                    e.currentTarget.style.color = "#111827";
                                   }}
                                   onMouseLeave={(e) => {
                                     e.currentTarget.style.backgroundColor = isChildActive ? SECONDARY : "#fafafa";
-                                    e.currentTarget.style.color = isChildActive ? "#1A1A1A" : "#4b5563";
+                                    e.currentTarget.style.color = isChildActive ? "#fff" : "#4b5563";
                                   }}
                                 >
-                                  <span style={{ color: isChildActive ? "#1A1A1A" : PRIMARY, fontSize: 14, lineHeight: 1 }}>›</span>
+                                  <span style={{ color: isChildActive ? "#fff" : PRIMARY, fontSize: 14, lineHeight: 1 }}>›</span>
                                   {child.label}
                                 </Link>
                               );

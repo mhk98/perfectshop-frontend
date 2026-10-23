@@ -2,7 +2,7 @@
 
 import type { SiteChromeSlots } from "@/components/SiteChrome";
 import { useEffect, useState } from "react";
-import Image from "@/components/AppImage";
+import Image from "next/image";
 import MarqueeBanner from "@/components/MarqueeBanner";
 import { apiFetch } from "@/lib/api";
 import { ApiResponse } from "@/types/api";
@@ -13,9 +13,8 @@ import {
   type OrderStatusOption,
 } from "@/services/orderStatusService";
 
-const PRIMARY = "#1A1A1A";
-const SECONDARY = "#FFC107";
-const GOLD_TEXT = "#A67C00";
+const PRIMARY = "#111827";
+const SECONDARY = "#FFB800";
 
 interface TrackedOrderItem {
   name: string;
@@ -539,7 +538,7 @@ export default function TrackOrderPage({ header, footer }: SiteChromeSlots) {
                   মোট
                 </span>
                 <span
-                  style={{ fontSize: 15, fontWeight: 900, color: GOLD_TEXT }}
+                  style={{ fontSize: 15, fontWeight: 900, color: SECONDARY }}
                 >
                   ৳{fmt(order.total)}
                 </span>
@@ -651,7 +650,7 @@ export default function TrackOrderPage({ header, footer }: SiteChromeSlots) {
                       height: 36,
                       borderRadius: 8,
                       background: SECONDARY,
-                      color: "#1A1A1A",
+                      color: "#fff",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",

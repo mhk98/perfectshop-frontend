@@ -196,7 +196,7 @@ export default async function LandingPage({ params }: PageProps) {
       <div className="landing-root">
         <TopStrip phone={phone} header={header} />
 
-        <section className="bg-[#e4f3df] px-4 pb-14 pt-8 text-center">
+        <section className="bg-[#FFFBEB] px-4 pb-14 pt-8 text-center">
           <div className="mx-auto max-w-5xl">
             {header?.status !== false && header?.logoUrl ? (
               <img
@@ -300,7 +300,7 @@ export default async function LandingPage({ params }: PageProps) {
                 style={{ color: colors.headingColor }}
               >
                 {reviewOfferPriceLabel}{" "}
-                <span className="text-green-600">
+                <span className="text-[#FFB800]">
                   {formatMoney(reviewOfferPrice)}/- টাকা
                 </span>
               </p>
@@ -440,13 +440,13 @@ export default async function LandingPage({ params }: PageProps) {
 }
 
 const DEFAULT_COLORS = {
-  titleColor: "#7b2457",
-  subTitleColor: "#111111",
-  headingColor: "#7b2457",
+  titleColor: "#111827",
+  subTitleColor: "#FFB800",
+  headingColor: "#111827",
   fontColor: "#333333",
-  buttonColor: "#078f12",
+  buttonColor: "#FFB800",
   buttonTextColor: "#ffffff",
-  sectionBgColor: "#e4f3df",
+  sectionBgColor: "#FFFBEB",
 };
 
 function getVideoEmbedUrl(value?: string | null) {
@@ -500,11 +500,11 @@ function TopStrip({
   if (header?.status === false) return null;
   const supportPhone = header?.supportPhone || phone;
   const socialLinks = (header?.socialLinks || []).filter((item) => item.url);
-  const accent = header?.accentColor || "#fbbf24";
+  const accent = header?.accentColor || "#FFB800";
   return (
     <div
       style={{
-        backgroundColor: header?.backgroundColor || "#1d1d1b",
+        backgroundColor: header?.backgroundColor || "#111827",
         color: header?.textColor || "#ffffff",
       }}
     >
